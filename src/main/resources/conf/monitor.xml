@@ -1,0 +1,25 @@
+<monitor>
+    <name>ApacheLogMonitor</name>
+    <type>managed</type>
+    <description>ApacheLog monitor</description>
+    <monitor-configuration></monitor-configuration>
+    <monitor-run-task>
+        <execution-style>periodic</execution-style>
+        <execution-frequency-in-seconds>60</execution-frequency-in-seconds>
+        <name>ApacheLog Monitor Run task</name>
+        <display-name>ApacheLog Monitor Run task</display-name>
+        <description>ApacheLog Monitor Run task</description>
+        <type>java</type>
+        <execution-timeout-in-secs>60</execution-timeout-in-secs>
+        
+		<task-arguments>
+			<argument name="config-dir" is-required="true" default-value="monitors/ApacheLogMonitor/conf" />
+		</task-arguments>
+                
+        <java-task>
+            <classpath>apache-log-monitoring-extension.jar;lib/ua-parser-${ua-parser.version}.jar</classpath>
+            <impl-class>com.appdynamics.extensions.logmonitor.apache.ApacheLogMonitor</impl-class>
+        </java-task>
+        
+    </monitor-run-task>
+</monitor>

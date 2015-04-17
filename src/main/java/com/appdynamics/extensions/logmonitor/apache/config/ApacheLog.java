@@ -1,0 +1,92 @@
+package com.appdynamics.extensions.logmonitor.apache.config;
+
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+/**
+ * @author Florencio Sarmiento
+ *
+ */
+public class ApacheLog {
+
+	private String name;
+
+	private String logPath;
+
+	private String logPattern;
+
+	private Set<Integer> hitResponseCodes;
+
+	private Set<String> nonPageExtensions;
+
+	private MetricsFilterForCalculation metricsFilterForCalculation;
+
+	private IndividualMetricsToDisplay individualMetricsToDisplay;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLogPath() {
+		return logPath;
+	}
+
+	public void setLogPath(String logPath) {
+		this.logPath = logPath;
+	}
+
+	public String getLogPattern() {
+		return logPattern;
+	}
+
+	public void setLogPattern(String logPattern) {
+		this.logPattern = logPattern;
+	}
+
+	public Set<Integer> getHitResponseCodes() {
+		return hitResponseCodes;
+	}
+
+	public void setHitResponseCodes(Set<Integer> hitResponseCodes) {
+		this.hitResponseCodes = hitResponseCodes;
+	}
+
+	public Set<String> getNonPageExtensions() {
+		return nonPageExtensions;
+	}
+
+	public void setNonPageExtensions(Set<String> nonPageExtensions) {
+		this.nonPageExtensions = nonPageExtensions;
+	}
+
+	public MetricsFilterForCalculation getMetricsFilterForCalculation() {
+		return metricsFilterForCalculation;
+	}
+
+	public void setMetricsFilterForCalculation(
+			MetricsFilterForCalculation metricsFilterForCalculation) {
+		this.metricsFilterForCalculation = metricsFilterForCalculation;
+	}
+
+	public IndividualMetricsToDisplay getIndividualMetricsToDisplay() {
+		return individualMetricsToDisplay;
+	}
+
+	public void setIndividualMetricsToDisplay(
+			IndividualMetricsToDisplay individualMetricsToDisplay) {
+		this.individualMetricsToDisplay = individualMetricsToDisplay;
+	}
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+}

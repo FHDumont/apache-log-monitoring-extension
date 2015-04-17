@@ -1,0 +1,27 @@
+apacheLogs:
+  - name: ""
+    logPath: ""
+    logPattern: ""
+    hitResponseCodes: [ ] #leave null to use default values
+    nonPageExtensions: [ ] #leave null to use default values
+
+    metricsFilterForCalculation:
+       excludeVisitors: [ ]
+       excludeSpiders: [ ]
+       excludeUrls: [ ]
+       excludeBrowsers: [ ]
+       excludeOs: [ ]
+
+    individualMetricsToDisplay:
+       includeVisitors: [ ]
+       includeSpiders: [ ]
+       includePages: [ ]
+       includeBrowsers: [ ]
+       includeOs: [ ]
+       includeResponseCodes: [ ]
+        
+# Number of concurrent threads
+noOfThreads: 3
+
+#prefix used to show up metrics in AppDynamics 
+metricPrefix: "Custom Metrics|Apache Log Monitor|"
