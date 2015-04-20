@@ -1,0 +1,487 @@
+<custom-dashboard controller-version="004-000-000-001"
+    custom-dashboard-version="80" height="768" name="Apache Log" width="1024">
+    <description/>
+    <security-token>188aac6c-299d-4bfa-9398-751134f3a766</security-token>
+    <sharing-revoked>false</sharing-revoked>
+    <layout-type/>
+    <dashboard-display-properties>
+        <refresh-interval>120000</refresh-interval>
+        <color>0</color>
+        <background-color>d0d4d9</background-color>
+        <start-time>01/01/1970 01:00:00</start-time>
+        <end-time>01/01/1970 01:00:00</end-time>
+        <minutes-before-anchor-time>15</minutes-before-anchor-time>
+    </dashboard-display-properties>
+    <is-template>false</is-template>
+    <canvas type="CANVAS_TYPE_GRID">
+        <widget widget-ordinal="1" widget-type="pie-chart">
+            <widget-display-properties height="3" width="4" x-axis="3" y-axis="4">
+                <label/>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>ffffff</background-color>
+                <color>404040</color>
+                <font-size>12</font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>PIE</widget-type>
+                <show-values>true</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type>
+                    <name-value>
+                        <name>Spider</name>
+                        <value>OTHER</value>
+                    </name-value>
+                    <name-value>
+                        <name>Visitor</name>
+                        <value>OTHER</value>
+                    </name-value>
+                </metric-match-criterias-name-to-metric-type>
+                <vertical-axis-label/>
+                <title>Bandwidth (bytes) Dispersion</title>
+                <hide-horizontal-axis>true</hide-horizontal-axis>
+                <compact-mode>false</compact-mode>
+                <show-legend>true</show-legend>
+                <horizontal-axis-label/>
+                <show-time-range>false</show-time-range>
+                <render-in-3d>false</render-in-3d>
+                <legend-position>POSITION_BOTTOM</legend-position>
+                <legend-column-count>2</legend-column-count>
+                <show-label>false</show-label>
+                <show-percent-values>true</show-percent-values>
+                <background-colors>
+                    <background-color>ffffff</background-color>
+                    <background-color>ffffff</background-color>
+                </background-colors>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series name="Spider" version="52">
+                    <widget-series-data application-name="ApacheLogApp" version="76">
+                        <metric-data-filter>
+                            <max-results>20</max-results>
+                            <sort-ascending>false</sort-ascending>
+                        </metric-data-filter>
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Spider|Total Bandwidth (bytes)</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                    <widget-series-display-properties type="LINE">
+                        <show-raw-metric-name>false</show-raw-metric-name>
+                    </widget-series-display-properties>
+                </widget-series>
+                <widget-series name="Visitor" version="52">
+                    <widget-series-data application-name="ApacheLogApp" version="75">
+                        <metric-data-filter>
+                            <max-results>20</max-results>
+                            <sort-ascending>false</sort-ascending>
+                        </metric-data-filter>
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Visitor|Total Bandwidth (bytes)</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                    <widget-series-display-properties type="LINE">
+                        <show-raw-metric-name>false</show-raw-metric-name>
+                    </widget-series-display-properties>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+        <widget widget-ordinal="2" widget-type="pie-chart">
+            <widget-display-properties height="3" width="4" x-axis="3" y-axis="8">
+                <label/>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>ffffff</background-color>
+                <color>404040</color>
+                <font-size>12</font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>PIE</widget-type>
+                <show-values>true</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type>
+                    <name-value>
+                        <name>Spider</name>
+                        <value>OTHER</value>
+                    </name-value>
+                    <name-value>
+                        <name>Visitor</name>
+                        <value>OTHER</value>
+                    </name-value>
+                </metric-match-criterias-name-to-metric-type>
+                <vertical-axis-label/>
+                <title>Page Access Dispersion</title>
+                <hide-horizontal-axis>true</hide-horizontal-axis>
+                <compact-mode>false</compact-mode>
+                <show-legend>true</show-legend>
+                <horizontal-axis-label/>
+                <show-time-range>false</show-time-range>
+                <render-in-3d>false</render-in-3d>
+                <legend-position>POSITION_BOTTOM</legend-position>
+                <legend-column-count>2</legend-column-count>
+                <show-label>false</show-label>
+                <show-percent-values>true</show-percent-values>
+                <background-colors>
+                    <background-color>ffffff</background-color>
+                    <background-color>ffffff</background-color>
+                </background-colors>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series name="Spider" version="46">
+                    <widget-series-data application-name="ApacheLogApp" version="75">
+                        <metric-data-filter>
+                            <max-results>20</max-results>
+                            <sort-ascending>false</sort-ascending>
+                        </metric-data-filter>
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Spider|Total Pages</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                    <widget-series-display-properties type="LINE">
+                        <show-raw-metric-name>false</show-raw-metric-name>
+                    </widget-series-display-properties>
+                </widget-series>
+                <widget-series name="Visitor" version="46">
+                    <widget-series-data application-name="ApacheLogApp" version="75">
+                        <metric-data-filter>
+                            <max-results>20</max-results>
+                            <sort-ascending>false</sort-ascending>
+                        </metric-data-filter>
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Visitor|Total Pages</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                    <widget-series-display-properties type="LINE">
+                        <show-raw-metric-name>false</show-raw-metric-name>
+                    </widget-series-display-properties>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+        <widget widget-ordinal="3" widget-type="metric-label">
+            <widget-display-properties height="2" width="4" x-axis="1" y-axis="0">
+                <label>${v}</label>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>330000</background-color>
+                <color>ffffff</color>
+                <font-size>25</font-size>
+                <use-automatic-font-size>true</use-automatic-font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>METRIC_LABEL</widget-type>
+                <show-values>false</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type/>
+                <text/>
+                <title>Total Hits:</title>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series
+                    name="56a24358-1942-497f-8084-42a37dbf46a3" version="38">
+                    <widget-series-data application-name="ApacheLogApp" version="39">
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Total Hits</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+        <widget widget-ordinal="5" widget-type="metric-label">
+            <widget-display-properties height="2" width="4" x-axis="1" y-axis="8">
+                <label>${v}</label>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>330000</background-color>
+                <color>ffffff</color>
+                <font-size>25</font-size>
+                <use-automatic-font-size>true</use-automatic-font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>METRIC_LABEL</widget-type>
+                <show-values>false</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type/>
+                <text/>
+                <title>Total Pages:</title>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series
+                    name="b27875b3-704b-4bcf-a96d-df3270a26913" version="32">
+                    <widget-series-data application-name="ApacheLogApp" version="39">
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Total Pages</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+        <widget widget-ordinal="4" widget-type="metric-label">
+            <widget-display-properties height="2" width="4" x-axis="1" y-axis="4">
+                <label>${v} Bytes</label>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>330000</background-color>
+                <color>ffffff</color>
+                <font-size>25</font-size>
+                <use-automatic-font-size>true</use-automatic-font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>METRIC_LABEL</widget-type>
+                <show-values>false</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type/>
+                <text/>
+                <title>Total Bandwidth:</title>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series
+                    name="ac5bfd7d-291c-41f8-9809-a8b03cd2de90" version="33">
+                    <widget-series-data application-name="ApacheLogApp" version="39">
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Total Bandwidth (bytes)</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+        <widget widget-ordinal="0" widget-type="pie-chart">
+            <widget-display-properties height="3" width="4" x-axis="3" y-axis="0">
+                <label/>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>ffffff</background-color>
+                <color>404040</color>
+                <font-size>12</font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>PIE</widget-type>
+                <show-values>true</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type>
+                    <name-value>
+                        <name>Spider</name>
+                        <value>OTHER</value>
+                    </name-value>
+                    <name-value>
+                        <name>Visitor</name>
+                        <value>OTHER</value>
+                    </name-value>
+                </metric-match-criterias-name-to-metric-type>
+                <vertical-axis-label/>
+                <title>Hits Dispersion</title>
+                <hide-horizontal-axis>true</hide-horizontal-axis>
+                <compact-mode>false</compact-mode>
+                <show-legend>true</show-legend>
+                <horizontal-axis-label/>
+                <show-time-range>false</show-time-range>
+                <render-in-3d>false</render-in-3d>
+                <legend-position>POSITION_BOTTOM</legend-position>
+                <legend-column-count>2</legend-column-count>
+                <show-label>false</show-label>
+                <show-percent-values>true</show-percent-values>
+                <background-colors>
+                    <background-color>ffffff</background-color>
+                    <background-color>ffffff</background-color>
+                </background-colors>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series name="Spider" version="77">
+                    <widget-series-data application-name="ApacheLogApp" version="76">
+                        <metric-data-filter>
+                            <max-results>20</max-results>
+                            <sort-ascending>false</sort-ascending>
+                        </metric-data-filter>
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Spider|Total Hits</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                    <widget-series-display-properties type="LINE">
+                        <show-raw-metric-name>false</show-raw-metric-name>
+                    </widget-series-display-properties>
+                </widget-series>
+                <widget-series name="Visitor" version="76">
+                    <widget-series-data application-name="ApacheLogApp" version="77">
+                        <metric-data-filter>
+                            <max-results>20</max-results>
+                            <sort-ascending>false</sort-ascending>
+                        </metric-data-filter>
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Visitor|Total Hits</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                    <widget-series-display-properties type="LINE">
+                        <show-raw-metric-name>false</show-raw-metric-name>
+                    </widget-series-display-properties>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+        <widget widget-ordinal="7" widget-type="metric-label">
+            <widget-display-properties height="1" width="6" x-axis="0" y-axis="6">
+                <label>500 Response: ${v}</label>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>330000</background-color>
+                <color>ff0000</color>
+                <font-size>30</font-size>
+                <use-automatic-font-size>false</use-automatic-font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>METRIC_LABEL</widget-type>
+                <show-values>false</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type/>
+                <text/>
+                <title/>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series
+                    name="79efc07c-32c4-4ee5-aec8-ad2139453c1b" version="9">
+                    <widget-series-data application-name="ApacheLogApp" version="13">
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Response Code|500|Hits</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+        <widget widget-ordinal="6" widget-type="metric-label">
+            <widget-display-properties height="1" width="6" x-axis="0" y-axis="0">
+                <label>404 Response: ${v}</label>
+                <description/>
+                <drill-down-url/>
+                <use-metric-browser-as-drill-down>true</use-metric-browser-as-drill-down>
+                <background-color>330000</background-color>
+                <color>ff0000</color>
+                <font-size>30</font-size>
+                <use-automatic-font-size>false</use-automatic-font-size>
+                <border-enabled>false</border-enabled>
+                <border-thickness>0</border-thickness>
+                <border-color>dbdbdb</border-color>
+                <background-alpha>1.0</background-alpha>
+                <widget-type>METRIC_LABEL</widget-type>
+                <show-values>false</show-values>
+                <additional-styles/>
+                <start-time>01/01/1970 01:00:00</start-time>
+                <end-time>01/01/1970 01:00:00</end-time>
+                <minutes-before-anchor-time>15</minutes-before-anchor-time>
+                <is-global>true</is-global>
+                <metric-match-criterias-name-to-metric-type/>
+                <text/>
+                <title/>
+            </widget-display-properties>
+            <widget-series-list>
+                <widget-series
+                    name="8eb35b28-5f3f-45ac-8803-56b7f0255d1c" version="12">
+                    <widget-series-data application-name="ApacheLogApp" version="13">
+                        <leaf-metric-expression display-name="null" is-literal-value="false">
+                            <function-type>VALUE</function-type>
+                            <metric-definition type="ABSOLUTE_METRIC_SCOPE">
+                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Response Code|404|Hits</metric-name>
+                            </metric-definition>
+                        </leaf-metric-expression>
+                        <roll-up>true</roll-up>
+                        <use-active-baseline>false</use-active-baseline>
+                    </widget-series-data>
+                </widget-series>
+            </widget-series-list>
+        </widget>
+    </canvas>
+</custom-dashboard>
