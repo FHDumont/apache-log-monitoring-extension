@@ -154,13 +154,16 @@ Typical Metric Path: **Application Infrastructure Performance|\<Tier\>|Custom Me
 | Bandwidth (bytes) | Bandwidth size |
 | Pages | No of times this response code is returned for any page request |
 
+##Custom Dashboard Example
+![image](http://community.appdynamics.com/t5/image/serverpage/image-id/1560iF816F2875A51A315/image-size/original?v=mpbl-1&px=-1)
+
 ##Contributing
 
 Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/apache-log-monitoring-extension).
 
 ##Community
 
-Find out more in the [AppSphere] community.
+Find out more in the [AppSphere](http://community.appdynamics.com/t5/eXchange-Community-AppDynamics/Apache-Log-Monitoring-Extension/idi-p/18313) community.
 
 ##Support
 

@@ -71,7 +71,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Spider|Total Bandwidth (bytes)</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Spider|Total Bandwidth (bytes)</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -90,7 +90,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Visitor|Total Bandwidth (bytes)</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Visitor|Total Bandwidth (bytes)</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -159,7 +159,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Spider|Total Pages</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Spider|Total Pages</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -178,7 +178,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Visitor|Total Pages</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Visitor|Total Pages</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -222,7 +222,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Total Hits</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Total Hits</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -263,7 +263,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Total Pages</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Total Pages</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -304,7 +304,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Total Bandwidth (bytes)</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Total Bandwidth (bytes)</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -370,7 +370,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Spider|Total Hits</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Spider|Total Hits</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -389,7 +389,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Visitor|Total Hits</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Visitor|Total Hits</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -433,7 +433,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Response Code|500|Hits</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Response Code|500|Hits</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
@@ -474,7 +474,7 @@
                         <leaf-metric-expression display-name="null" is-literal-value="false">
                             <function-type>VALUE</function-type>
                             <metric-definition type="ABSOLUTE_METRIC_SCOPE">
-                                <metric-name>Application Infrastructure Performance|ApacheLogTier|Custom Metrics|Apache Log Monitor|CombinedApacheLog|Response Code|404|Hits</metric-name>
+                                <metric-name>${METRIC_PREFIX}|${INSTANCE_NAME}|Response Code|404|Hits</metric-name>
                             </metric-definition>
                         </leaf-metric-expression>
                         <roll-up>true</roll-up>
