@@ -7,7 +7,9 @@ import static com.appdynamics.extensions.logmonitor.apache.util.ApacheLogMonitor
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,12 +57,18 @@ public class FilePointerProcessor {
     		fileWriter = new FileWriter(file, false);
     		StringBuilder output = new StringBuilder();
     		
+    		int index = 0;
+    		
     		for (Map.Entry<String, AtomicLong> filePointer : filePointers.entrySet()) {
     			if (StringUtils.isNotBlank(filePointer.getKey())) {
+    				if (index > 0) {
+    					output.append(System.getProperty("line.separator"));
+    				}
+    				
     				output.append(filePointer.getKey())
-    				.append(METRIC_PATH_SEPARATOR)
-    				.append(filePointer.getValue())
-    				.append(System.getProperty("line.separator"));
+    						.append(METRIC_PATH_SEPARATOR)
+    						.append(filePointer.getValue());
+    				index++;
     			}
     		}
     		
@@ -174,6 +182,13 @@ public class FilePointerProcessor {
     		path = String.format("%s%s%s", new File(".").getAbsolutePath(), 
         			File.separator, FILEPOINTER_FILENAME);
     	}
+    	
+    	try {
+			path = URLDecoder.decode(path, "UTF-8");
+			
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.warn(String.format("Unable to decode file path [%s] using UTF-8", path));
+		}
     	
     	if (LOGGER.isDebugEnabled()) {
     		LOGGER.debug("Filepointer path: " + path);
