@@ -11,9 +11,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class ApacheLog {
 
-	private String name;
+	private String displayName;
 
-	private String logPath;
+	private String logDirectory;
+
+	private String logName;
 
 	private String logPattern;
 
@@ -25,20 +27,28 @@ public class ApacheLog {
 
 	private IndividualMetricsToDisplay individualMetricsToDisplay;
 
-	public String getName() {
-		return name;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
-	public String getLogPath() {
-		return logPath;
+	public String getLogDirectory() {
+		return logDirectory;
 	}
 
-	public void setLogPath(String logPath) {
-		this.logPath = logPath;
+	public void setLogDirectory(String logDirectory) {
+		this.logDirectory = logDirectory;
+	}
+
+	public String getLogName() {
+		return logName;
+	}
+
+	public void setLogName(String logName) {
+		this.logName = logName;
 	}
 
 	public String getLogPattern() {

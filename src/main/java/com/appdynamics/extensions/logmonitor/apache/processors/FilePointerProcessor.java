@@ -1,27 +1,19 @@
 package com.appdynamics.extensions.logmonitor.apache.processors;
 
 import static com.appdynamics.extensions.logmonitor.apache.Constants.FILEPOINTER_FILENAME;
-import static com.appdynamics.extensions.logmonitor.apache.Constants.METRIC_PATH_SEPARATOR;
-import static com.appdynamics.extensions.logmonitor.apache.util.ApacheLogMonitorUtil.closeRandomAccessFile;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.bitbucket.kienerj.OptimizedRandomAccessFile;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 import com.appdynamics.extensions.logmonitor.apache.ApacheLogMonitor;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 
 /**
  * @author Florencio Sarmiento
@@ -31,68 +23,44 @@ public class FilePointerProcessor {
 	
 	public static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.logmonitor.apache.FilePointerProcessor");
 	
-	private Map<String, AtomicLong> filePointers = new ConcurrentHashMap<String, AtomicLong>();
+	private ConcurrentHashMap<String, FilePointer> filePointers = new ConcurrentHashMap<String, FilePointer>();
+	
+	private ObjectMapper mapper = new ObjectMapper();
 	
 	public FilePointerProcessor() {
 		initialiseFilePointers();
 	}
+	
+	public void updateFilePointer(String dynamicLogPath, 
+			String actualLogPath, long lastReadPosition) {
+		FilePointer filePointer = getFilePointer(dynamicLogPath, actualLogPath);
+		filePointer.setFilename(actualLogPath);
+		filePointer.updateLastReadPosition(lastReadPosition);
+	}
 
-	public AtomicLong getFilePointer(String logPath) {
-		if (filePointers.containsKey(logPath)) {
-			return filePointers.get(logPath);
+	public FilePointer getFilePointer(String dynamicLogPath, String actualLogPath) {
+		if (filePointers.containsKey(dynamicLogPath)) {
+			return filePointers.get(dynamicLogPath);
 		}
 		
-		AtomicLong filePointer = new AtomicLong(0);
-		filePointers.put(logPath, filePointer);
-		return filePointer;
+		FilePointer newFilePointer = new FilePointer();
+		newFilePointer.setFilename(actualLogPath);
+		
+		FilePointer previousFilePointer = filePointers.putIfAbsent(dynamicLogPath, newFilePointer);
+		return previousFilePointer != null ? previousFilePointer : newFilePointer;
 	}
     
     public void updateFilePointerFile() {
-    	String filePointerPath = getFilePointerPath();
+    	File file = new File(getFilePointerPath());
     	
-    	File file = new File(filePointerPath);
-    	FileWriter fileWriter = null;
-    	
-    	try {
-    		fileWriter = new FileWriter(file, false);
-    		StringBuilder output = new StringBuilder();
-    		
-    		int index = 0;
-    		
-    		for (Map.Entry<String, AtomicLong> filePointer : filePointers.entrySet()) {
-    			if (StringUtils.isNotBlank(filePointer.getKey())) {
-    				if (index > 0) {
-    					output.append(System.getProperty("line.separator"));
-    				}
-    				
-    				output.append(filePointer.getKey())
-    						.append(METRIC_PATH_SEPARATOR)
-    						.append(filePointer.getValue());
-    				index++;
-    			}
-    		}
-    		
-    		if (output.length() > 0) {
-    	    	if (LOGGER.isDebugEnabled()) {
-    	    		LOGGER.debug(String.format(
-    	    				"Updating [%s] with [%s]", filePointerPath, output.toString()));
-    	    	}
-    	    	
-    			fileWriter.write(output.toString());
-    		}
-    		
-    	} catch (IOException ex) {
+		try {
+			mapper.writerWithDefaultPrettyPrinter().writeValue(file, filePointers);
+	 
+		} catch (Exception ex) {
     		LOGGER.error(String.format(
-					"Unfortunately an error occurred while reading the file %s", file.getPath()),
-					ex);
-    		
-    	} finally {
-    		if (fileWriter != null) {
-    			try {
-    				fileWriter.close();
-    			} catch (IOException e) {}
-    		}
-    	}
+					"Unfortunately an error occurred while saving filepointers to %s", 
+					file.getPath()), ex);
+		}
     }
 	
     private void initialiseFilePointers() {
@@ -100,49 +68,22 @@ public class FilePointerProcessor {
     	
     	File file = new File(getFilePointerPath());
     	
-    	OptimizedRandomAccessFile randomAccessFile = null;
-		
-		try {
-			randomAccessFile = new OptimizedRandomAccessFile(file, "rws");
-			
-			String currentLine = null;
-			
-			while((currentLine = randomAccessFile.readLine()) != null) {
-				List<String> stringList = Lists.newArrayList(Splitter
-						.on(METRIC_PATH_SEPARATOR)
-						.trimResults()
-						.omitEmptyStrings()
-						.split(currentLine));
-				
-				String filepath = null;
-				String stringFilePointer = null;
-				int index = 0;
-				
-				for (String value : stringList) {
-					if (index == 0) {
-						filepath = value;
-					} else {
-						stringFilePointer = value;
-						break;
-					}
-					
-					index++;
-				}
-				
-				if (StringUtils.isNotBlank(filepath)) {
-					Long filePointer = convertFilePointerToLong(stringFilePointer);
-					filePointers.put(filepath, new AtomicLong(filePointer));
-				}
+		if (!file.exists()) {
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("Unable to find: " + file.getPath());
 			}
 			
-		} catch (Exception e) {
-			LOGGER.error(String.format(
-					"Unfortunately an error occurred while reading the file %s", file.getPath()),
-					e);
-			return;
-			
-		} finally {
-			closeRandomAccessFile(randomAccessFile);
+		} else {
+			try {
+				filePointers = mapper.readValue(file,
+								new TypeReference<ConcurrentHashMap<String, FilePointer>>() {
+								});
+
+			} catch (Exception ex) {
+				LOGGER.error(String.format(
+								"Unfortunately an error occurred while reading filepointer %s",
+								file.getPath()), ex);
+			}
 		}
 		
 		LOGGER.info("Filepointers initialised with: " + filePointers);
@@ -195,23 +136,5 @@ public class FilePointerProcessor {
     	}
     	
     	return path;
-    }
-    
-    private Long convertFilePointerToLong(String stringFilePointer) {
-    	long filePointer;
-    	
-    	try {
-    		filePointer = Long.valueOf(stringFilePointer);
-    		
-    	} catch (NumberFormatException ex) {
-    		if (LOGGER.isDebugEnabled()) {
-    			LOGGER.debug(String.format("Unable to convert [%s] to long, defaulting to 0", 
-    					stringFilePointer));
-    		}
-    		
-    		filePointer = 0;
-    	}
-    	
-    	return filePointer;
     }
 }

@@ -106,7 +106,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
 		
 		for (ApacheLog apacheLog : config.getApacheLogs()) {
 			ApacheLogMonitorTask task = new ApacheLogMonitorTask(
-					filePointerProcessor.getFilePointer(apacheLog.getLogPath()), 
+					filePointerProcessor, 
 					grokFilePath, 
 					userAgentFilePath, 
 					apacheLog);

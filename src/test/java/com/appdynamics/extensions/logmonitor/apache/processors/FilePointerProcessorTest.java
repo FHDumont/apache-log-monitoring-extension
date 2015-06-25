@@ -1,10 +1,14 @@
 package com.appdynamics.extensions.logmonitor.apache.processors;
 
+import static com.appdynamics.extensions.logmonitor.apache.Constants.FILEPOINTER_FILENAME;
+
 import static org.junit.Assert.*;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.io.File;
 
+import org.junit.After;
 import org.junit.Test;
+
 
 public class FilePointerProcessorTest {
 	
@@ -13,21 +17,34 @@ public class FilePointerProcessorTest {
 	@Test
 	public void testUpdateFilePointerFileIsPersisted() {
 		classUnderTest = new FilePointerProcessor();
-		String logPath = "src/test/resources/test.log";
+		String logPath = "src/test/resources/test-logs/access.log";
 		
-		AtomicLong origFilePointer = classUnderTest.getFilePointer(logPath);
-		assertEquals(0, origFilePointer.get());
+		FilePointer origFilePointer =  classUnderTest.getFilePointer(logPath, logPath);
+		assertEquals(0, origFilePointer.getLastReadPosition().get());
 		
 		// lets update the filePointer
 		long newFilePointer = 1234;
-		origFilePointer.set(newFilePointer);
+		String newFilename = "src/test/resources/test-logs/access2.log";
+		origFilePointer.setFilename(newFilename);
+		origFilePointer.updateLastReadPosition(newFilePointer);
 		classUnderTest.updateFilePointerFile();
 		
 		// re-initialise the filepointer 
 		// it should pick up from the file
 		classUnderTest = new FilePointerProcessor();
-		AtomicLong result = classUnderTest.getFilePointer(logPath);
-		assertEquals(newFilePointer, result.get());
+		FilePointer result = classUnderTest.getFilePointer(logPath, logPath);
+		assertEquals(newFilePointer, result.getLastReadPosition().get());
+		assertEquals(newFilename, result.getFilename());
+	}
+	
+	@After
+	public void deleteFilePointerFile() throws Exception {
+		File filePointerFile = new File("./target/classes/com/appdynamics/extensions/logmonitor/apache/" + 
+					FILEPOINTER_FILENAME);
+		
+		if (filePointerFile.exists()) {
+			filePointerFile.delete();
+		}
 	}
 
 }

@@ -20,7 +20,7 @@ public final class Constants {
 	public static final String USER_AGENT_FILE = String.format("%s%s%s", 
 			PATTERNS, File.separator, "user-agent-regexes.yaml");
 	
-	public static final String FILEPOINTER_FILENAME = "filepointer.txt";
+	public static final String FILEPOINTER_FILENAME = "filepointer.json";
 	
 	public static final String METRIC_PATH_SEPARATOR = "|";
 	

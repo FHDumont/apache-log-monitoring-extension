@@ -25,8 +25,9 @@ This extension works only with the standalone machine agent.
 
 | Param | Description | Default Value | Example |
 | ----- | ----- | ----- | ----- |
-| name | The alias name of this log, used in metric path. |  | "Staging Apache" |
-| logPath | The full path of the access log |  | "/var/log/apache2/access.log" |
+| displayName | The alias name of this log, used in metric path. |  | "Staging Apache" |
+| logDirectory | The full directory path access log |  | "/var/log/apache2" |
+| logName | The access log filename. Supports wildcard (\*) for dynamic filename |  | **Static name:**<br/>"access.log" <br/><br/>**Dynamic name:**<br/>"access\*.log" |
 | logPattern | The grok pattern used for parsing the log. See examples for pre-defined pattern you can use.<br/><br/>If you're using a custom log format, you can create your own grok pattern to match this, see Grok Expressions section.  |  | **"%{COMMONAPACHELOG}"** - for common log format<br/><br/>**"%{COMBINEDAPACHELOG}"** - for combined log format |
 | hitResponseCodes | The response codes used to determine a successful hit. Leave null to use default values. | 200, 304 | 200, 201, 304, 305 |
 | nonPageExtensions | The URL extensions used to determine if request is for non-page access, e.g. image. Leave null to use default values | "ico", "css", "js",<br/>"class","gif","jpg",<br/>"jpeg","png","bmp",<br/>"rss","xml","swf" | "pdf","jpg" |
@@ -50,12 +51,13 @@ This extension works only with the standalone machine agent.
 
 **\*Requires user-agent details in the log, e.g. use combined log pattern in apache + specify logPattern as "%{COMBINEDAPACHELOG}" in this config.yaml.**
 
-###sample config.yaml
+###sample config.yaml with static filename and dynamic filename
 
 ~~~
 apacheLogs:
-  - name: "TestApache"
-    logPath: "src/test/resources/test-logs/access.log"
+  - name: "StaticName"
+    logDirectory: "/var/log/apache2"
+    logName: "access.log"
     logPattern: "%{COMMONAPACHELOG}"
     hitResponseCodes: [ ] #leave null to use default values
     nonPageExtensions: [ ] #leave null to use default values
@@ -74,6 +76,28 @@ apacheLogs:
        includeBrowsers: ["Chrome.*" ]
        includeOs: ["MAC.*" ]
        includeResponseCodes: [200, 305, 304, 400, 401, 500 ]
+       
+  - name: "DynamicLog"
+    logDirectory: "/usr/log/apache2"
+    logName: "access*.log"
+    logPattern: "%{COMBINEDAPACHELOG}"
+    hitResponseCodes: [ ] #leave null to use default values
+    nonPageExtensions: [ ] #leave null to use default values
+    
+    metricsFilterForCalculation:
+       excludeVisitors: [ ]
+       excludeSpiders: [ ]
+       excludeUrls: [ ]
+       excludeBrowsers: [ ]
+       excludeOs: [ ]
+      
+    individualMetricsToDisplay:
+       includeVisitors: [ ]
+       includeSpiders: [ ]
+       includePages: [ ]
+       includeBrowsers: [ ]
+       includeOs: [ ]
+       includeResponseCodes: [ ]
         
 noOfThreads: 3        
 

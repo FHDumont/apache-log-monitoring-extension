@@ -59,9 +59,6 @@ public class ApacheLogMonitorTest {
 	@Mock
 	private FilePointerProcessor mockFilePointerProcessor;
 	
-	@Mock
-	private AtomicLong mockFilePointer;
-	
 	@Before
 	public void setUp() throws Exception {
 		mockStatic(ApacheLogMonitorUtil.class);
@@ -73,7 +70,6 @@ public class ApacheLogMonitorTest {
 		when(mockConfiguration.getApacheLogs()).thenReturn(mockApacheLogs);
 		
 		whenNew(FilePointerProcessor.class).withNoArguments().thenReturn(mockFilePointerProcessor);
-		when(mockFilePointerProcessor.getFilePointer(anyString())).thenReturn(mockFilePointer);
 		
 		whenNew(MetricWriter.class).withArguments(any(AManagedMonitor.class), anyString()).thenReturn(mockMetricWriter);
 		setUpTestMetricsAndApacheLogMonitorTask();

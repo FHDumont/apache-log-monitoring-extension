@@ -1,9 +1,12 @@
 package com.appdynamics.extensions.logmonitor.apache;
 
+import static com.appdynamics.extensions.logmonitor.apache.Constants.FILEPOINTER_FILENAME;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Test;
 
 import com.appdynamics.extensions.logmonitor.apache.ApacheLogMonitor;
@@ -21,6 +24,16 @@ public class ApacheLogMonitorITest {
 		
 		TaskOutput result = classUnderTest.execute(args, null);
 		assertTrue(result.getStatusMessage().contains("successfully completed"));
+	}
+	
+	@After
+	public void deleteFilePointerFile() throws Exception {
+		File filePointerFile = new File("./target/classes/com/appdynamics/extensions/logmonitor/apache/" + 
+					FILEPOINTER_FILENAME);
+		
+		if (filePointerFile.exists()) {
+			filePointerFile.delete();
+		}
 	}
 
 }

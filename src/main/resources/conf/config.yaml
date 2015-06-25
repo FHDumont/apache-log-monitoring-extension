@@ -1,6 +1,7 @@
 apacheLogs:
-  - name: ""
-    logPath: ""
+  - displayName: ""
+    logDirectory: ""
+    logName: ""
     logPattern: ""
     hitResponseCodes: [ ] #leave null to use default values
     nonPageExtensions: [ ] #leave null to use default values
