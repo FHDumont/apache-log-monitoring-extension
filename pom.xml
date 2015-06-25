@@ -171,6 +171,7 @@
 				<version>1.0-m3</version>
 				<configuration>
 				    <noDeploy>true</noDeploy>
+				    <allowSnapshots>true</allowSnapshots>
 				</configuration>
 			</plugin>
 			<plugin>
