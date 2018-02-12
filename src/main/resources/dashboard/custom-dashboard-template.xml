@@ -1,3 +1,10 @@
+<!--
+  ~ Copyright 2015. AppDynamics LLC and its affiliates.
+  ~ All Rights Reserved.
+  ~ This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+  ~ The copyright notice above does not evidence any actual or intended publication of such source code.
+  -->
+
 <custom-dashboard controller-version="004-000-000-001"
     custom-dashboard-version="80" height="768" name="Apache Log" width="1024">
     <description/>

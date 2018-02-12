@@ -1,6 +1,6 @@
 # AppDynamics Apache Log Monitoring Extension
 
-##Use Case
+## Use Case
 
 <p>Monitors Apache access log file and reports metrics such as successful hits, bandwidth and page access count of visitors, spiders, browsers and operating systems. 
 
@@ -10,16 +10,16 @@ This extension works only with the standalone machine agent.
 
 **Note: By default, the Machine agent can only send a fixed number of metrics to the controller. This extension can potentially report thousands of metrics, so to change this limit, please follow the instructions mentioned [here](https://docs.appdynamics.com/display/PRO40/Metrics+Limits).** 
 
-##Installation
+## Installation
 
 1. Run 'mvn clean install' from apache-log-monitoring-extension directory
 2. Copy and unzip ApacheLogMonitor-\<version\>.zip from 'target' directory into \<machine_agent_dir\>/monitors/
 3. Edit config.yaml file in ApacheLogMonitor/conf and provide the required configuration (see Configuration section)
 4. Restart the Machine Agent.
 
-##Configuration
+## Configuration
 
-###config.yaml
+### config.yaml
 
 **Note: Please avoid using tab (\t) when editing yaml files. You may want to validate the yaml file using a [yaml validator](http://yamllint.com/).**
 
@@ -51,7 +51,7 @@ This extension works only with the standalone machine agent.
 
 **\*Requires user-agent details in the log, e.g. use combined log pattern in apache + specify logPattern as "%{COMBINEDAPACHELOG}" in this config.yaml.**
 
-###sample config.yaml with static filename and dynamic filename
+### sample config.yaml with static filename and dynamic filename
 
 ~~~
 apacheLogs:
@@ -104,7 +104,7 @@ noOfThreads: 3
 metricPrefix: "Custom Metrics|Apache Log Monitor|"
 ~~~
 
-###Grok Expressions
+### Grok Expressions
 Grok is a way to define and use complex, nested regular expressions in an easy to read and use format. Regexes defining discrete elements in a log file are mapped to grok-pattern names, which can also be used to create more complex patterns.
 
 Grok file is located in **ApacheLogMonitor/conf/patterns/grok-patterns.grok**.
@@ -138,7 +138,7 @@ logPattern: "%{MYCUSTOMAPACHELOG}"
 ...
 ~~~
 
-##Metrics
+## Metrics
 
 ### Definition
 | Metric | Description |
@@ -178,18 +178,18 @@ Typical Metric Path: **Application Infrastructure Performance|\<Tier\>|Custom Me
 | Bandwidth (bytes) | Bandwidth size |
 | Pages | No of times this response code is returned for any page request |
 
-##Custom Dashboard Example
+## Custom Dashboard Example
 ![image](http://community.appdynamics.com/t5/image/serverpage/image-id/1560iF816F2875A51A315/image-size/original?v=mpbl-1&px=-1)
 
-##Contributing
+## Contributing
 
 Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/apache-log-monitoring-extension).
 
-##Community
+## Community
 
-Find out more in the [AppSphere](http://community.appdynamics.com/t5/eXchange-Community-AppDynamics/Apache-Log-Monitoring-Extension/idi-p/18313) community.
+Find out more in the [AppSphere](https://www.appdynamics.com/community/exchange/extension/apache-log-monitoring-extension/) community.
 
-##Support
+## Support
 
-For any questions or feature request, please contact [AppDynamics Center of Excellence](mailto:ace-request@appdynamics.com).
+For any questions or feature request, please contact [AppDynamics Support](mailto:help@appdynamics.com).
 
