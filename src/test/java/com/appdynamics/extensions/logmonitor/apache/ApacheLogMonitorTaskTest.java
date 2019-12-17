@@ -35,7 +35,7 @@ public class ApacheLogMonitorTaskTest {
 		apacheLog.setDisplayName("TestLog");
 		apacheLog.setLogName("access.log");
 		apacheLog.setLogDirectory("src/test/resources/test-logs");
-		apacheLog.setLogPattern("%{COMMONAPACHELOG}");
+		apacheLog.setLogPattern("%{COMMONAPACHELOG_WITH_RESP_TIME}");
 		apacheLog.setHitResponseCodes(new HashSet<Integer>());
 		apacheLog.setIndividualMetricsToDisplay(new IndividualMetricsToDisplay());
 		apacheLog.setMetricsFilterForCalculation(new MetricsFilterForCalculation());
@@ -47,6 +47,7 @@ public class ApacheLogMonitorTaskTest {
 				apacheLog);
 		
 		ApacheLogMetrics result = classUnderTest.call();
+		filePointerProcessor.updateFilePointerFile();
 		assertNotNull(result);
 		
 		File testFile = new File("src/test/resources/test-logs/access.log");

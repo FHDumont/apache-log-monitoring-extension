@@ -80,9 +80,10 @@ public class ResponseCodeProcessorTest {
 		List<Integer> testResponseCodes = Arrays.asList(200, 211, 214, 305, 354, 354);
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
+		Long testResponseTime = 100L;
 		
 		for (Integer responseCode : testResponseCodes) {
-			classUnderTest.processMetrics(responseCode, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(responseCode, testBandwidth, true, testMetrics,true,testResponseTime);
 		}
 		
 		// we're not expecting any group metrics
@@ -90,6 +91,8 @@ public class ResponseCodeProcessorTest {
 		assertEquals(BigInteger.ZERO, testMetrics.getResponseCodeMetrics().getPageViewCount());
 		assertEquals(BigInteger.ZERO, testMetrics.getResponseCodeMetrics().getBandwidth());
 		assertTrue(testMetrics.getResponseCodeMetrics().getMembers().isEmpty());
+		assertEquals(BigInteger.ZERO,testMetrics.getResponseCodeMetrics().getAvgResponseTime());
+		assertEquals(BigInteger.ZERO,testMetrics.getResponseCodeMetrics().getErrorRatePercentage());
 	}
 	
 	@Test
@@ -104,9 +107,10 @@ public class ResponseCodeProcessorTest {
 		List<Integer> testResponseCodes = Arrays.asList(200, 211, 214, 305, 354, 354);
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
+		Long testResponseTime = 100L;
 		
 		for (Integer responseCode : testResponseCodes) {
-			classUnderTest.processMetrics(responseCode, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(responseCode, testBandwidth, true, testMetrics,true,testResponseTime);
 		}
 		
 		// we're not expecting any group metrics, only member metrics
@@ -114,16 +118,22 @@ public class ResponseCodeProcessorTest {
 		assertEquals(BigInteger.ZERO, testMetrics.getResponseCodeMetrics().getPageViewCount());
 		assertEquals(BigInteger.ZERO, testMetrics.getResponseCodeMetrics().getBandwidth());
 		assertEquals(2, testMetrics.getResponseCodeMetrics().getMembers().size());
+		assertEquals(BigInteger.ZERO,testMetrics.getResponseCodeMetrics().getAvgResponseTime());
+		assertEquals(BigInteger.ZERO,testMetrics.getResponseCodeMetrics().getErrorRatePercentage());
 		
 		Metrics resp200Metrics = testMetrics.getResponseCodeMetrics().getMembers().get("200");
 		assertEquals(BigInteger.ONE, resp200Metrics.getHitCount());
 		assertEquals(BigInteger.ONE, resp200Metrics.getPageViewCount());
 		assertEquals(BigInteger.valueOf(testBandwidth), resp200Metrics.getBandwidth());
+		assertEquals(BigInteger.valueOf(testResponseTime),resp200Metrics.getAvgResponseTime());
+		assertEquals(BigInteger.ZERO,resp200Metrics.getErrorRatePercentage());
 		
 		Metrics resp354Metrics = testMetrics.getResponseCodeMetrics().getMembers().get("354");
 		assertEquals(BigInteger.valueOf(2), resp354Metrics.getHitCount());
 		assertEquals(BigInteger.valueOf(2), resp354Metrics.getPageViewCount());
 		assertEquals(BigInteger.valueOf(2 * testBandwidth), resp354Metrics.getBandwidth());
+		assertEquals(BigInteger.valueOf(testResponseTime),resp354Metrics.getAvgResponseTime());
+		assertEquals(BigInteger.ZERO,resp354Metrics.getErrorRatePercentage());
 	}
 
 }

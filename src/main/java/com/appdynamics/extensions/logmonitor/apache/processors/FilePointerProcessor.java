@@ -46,6 +46,9 @@ public class FilePointerProcessor {
 	}
 
 	public FilePointer getFilePointer(String dynamicLogPath, String actualLogPath) {
+		
+		dynamicLogPath = dynamicLogPath.replace("\\", "/");
+		
 		if (filePointers.containsKey(dynamicLogPath)) {
 			return filePointers.get(dynamicLogPath);
 		}

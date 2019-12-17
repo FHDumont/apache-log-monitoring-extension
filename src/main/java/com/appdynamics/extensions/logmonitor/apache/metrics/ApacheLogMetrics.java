@@ -8,9 +8,13 @@
 package com.appdynamics.extensions.logmonitor.apache.metrics;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.appdynamics.extensions.logmonitor.apache.util.ApacheLogMonitorUtil;
 
 /**
  * @author Florencio Sarmiento
@@ -77,6 +81,44 @@ public class ApacheLogMetrics {
 	public BigInteger getTotalBandwidth() {
 		return getVisitorMetrics().getBandwidth()
 				.add(getSpiderMetrics().getBandwidth());
+	}
+	
+	public BigInteger getTotalFailureCount() {
+		return getVisitorMetrics().getFailureCount()
+				.add(getSpiderMetrics().getFailureCount());
+	}
+	
+	public BigInteger getErrorRatePercentage() {
+		BigInteger errorRate = BigInteger.ZERO;
+		
+		BigInteger totalRequests = getTotalHitCount().add(getTotalFailureCount());
+		
+		if(totalRequests != BigInteger.ZERO) {
+			errorRate = (getTotalFailureCount().multiply(BigInteger.valueOf(100))).divide(totalRequests);
+		}
+		
+		return errorRate;
+	}
+	
+	public BigInteger getAvgResponseTime() {
+		BigInteger totalResponseTime = getVisitorMetrics().getTotalResponseTime().add(getSpiderMetrics().getTotalResponseTime());
+		BigInteger totalRequests = getTotalHitCount().add(getTotalFailureCount());
+		
+		BigInteger avgResponseTime = BigInteger.ZERO;
+		if(totalRequests != BigInteger.ZERO && totalResponseTime != BigInteger.ZERO) {
+			avgResponseTime = totalResponseTime.divide(totalRequests);
+		}
+		
+		return avgResponseTime;
+	}
+	
+	public BigInteger getResponseTimePercentile(Integer percentile) {
+		List<Long> respTimeList = new ArrayList<Long>();
+		respTimeList.addAll(getVisitorMetrics().getResponseTimeList());
+		respTimeList.addAll(getSpiderMetrics().getResponseTimeList());
+		
+		Long percentileValue = ApacheLogMonitorUtil.getNthPercentile(respTimeList, percentile, 0L);
+		return BigInteger.valueOf(percentileValue);
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class MetricsExtractorTest {
 				"src/test/resources/conf/patterns/user-agent-regexes.yaml", 
 				getTestApacheLog());
 		
-		String testLog = "10.10.1.2 - - [14/Apr/2015:04:54:21 -0400] \"GET /test.html?param1=value HTTP/1.1\" 200 5678 \"-\" "
+		String testLog = "10.10.1.2 - - [14/Apr/2015:04:54:21 -0400] \"GET /test.html?param1=value HTTP/1.1\" 200 5678 500 \"-\" "
 				+ "\"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\"";
 		
 		ApacheLogMetrics result = new ApacheLogMetrics();
@@ -140,7 +140,7 @@ public class MetricsExtractorTest {
 				"src/test/resources/conf/patterns/user-agent-regexes.yaml", 
 				getTestApacheLog());
 		
-		String testLog = "10.10.1.2 - - [14/Apr/2015:04:54:21 -0400] \"GET /test.html?param1=value HTTP/1.1\" 200 5678 \"-\" "
+		String testLog = "10.10.1.2 - - [14/Apr/2015:04:54:21 -0400] \"GET /test.html?param1=value HTTP/1.1\" 200 5678 500 \"-\" "
 				+ "\"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.25 Safari/534.3\"";
 		
 		ApacheLogMetrics result = new ApacheLogMetrics();
@@ -230,7 +230,7 @@ public class MetricsExtractorTest {
 		metricsToDisplay.setIncludeResponseCodes(new HashSet<Integer>(Arrays.asList(200, 404)));
 		
 		ApacheLog apacheLog = new ApacheLog();
-		apacheLog.setLogPattern("%{COMBINEDAPACHELOG}");
+		apacheLog.setLogPattern("%{COMBINEDAPACHELOG_WITH_RESP_TIME}");
 		apacheLog.setIndividualMetricsToDisplay(metricsToDisplay);
 		apacheLog.setMetricsFilterForCalculation(new MetricsFilterForCalculation());
 		
