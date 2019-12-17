@@ -253,10 +253,6 @@ public class ApacheLogMonitorTest {
 				BigInteger.ZERO);
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|404|" + BANDWIDTH, 
 				BigInteger.valueOf(10));
-		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|404|" + FAILURES, 
-				BigInteger.ONE);		
-		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|404|" + ERROR_RATE_PERCENTAGE, 
-				BigInteger.valueOf(100L));		
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|404|" + AVERGAGE_RESPONSE_TIME, 
 				BigInteger.valueOf(100L));
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|404|" + PAGES, 
@@ -266,10 +262,6 @@ public class ApacheLogMonitorTest {
 				BigInteger.valueOf(2));
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|200|" + BANDWIDTH, 
 				BigInteger.valueOf(15));
-		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|200|" + FAILURES, 
-				BigInteger.ZERO);		
-		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|200|" + ERROR_RATE_PERCENTAGE, 
-				BigInteger.ZERO);		
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|200|" + AVERGAGE_RESPONSE_TIME, 
 				BigInteger.valueOf(100L));
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|200|" + PAGES, 
@@ -280,10 +272,6 @@ public class ApacheLogMonitorTest {
 				BigInteger.ONE);
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|304|" + BANDWIDTH, 
 				BigInteger.valueOf(9));
-		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|304|" + FAILURES, 
-				BigInteger.ZERO);		
-		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|304|" + ERROR_RATE_PERCENTAGE, 
-				BigInteger.ZERO);		
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|304|" + AVERGAGE_RESPONSE_TIME, 
 				BigInteger.valueOf(100L));
 		verifyMetric("Custom Metrics|Apache Log Monitor|TestApache|Response Code|304|" + PAGES, 

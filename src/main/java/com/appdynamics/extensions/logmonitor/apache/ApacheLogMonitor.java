@@ -238,8 +238,12 @@ public class ApacheLogMonitor extends AManagedMonitor {
     		Metrics metrics = member.getValue();
     		printCollectiveObservedSum(memberPrefix + HITS, metrics.getHitCount());
     		printCollectiveObservedSum(memberPrefix + BANDWIDTH, metrics.getBandwidth());
-    		printCollectiveObservedSum(memberPrefix + FAILURES, metrics.getFailureCount());
-        	printCollectiveObservedCurrent(memberPrefix + ERROR_RATE_PERCENTAGE, metrics.getErrorRatePercentage());
+    		
+    		if(groupPrefix != null && !groupPrefix.endsWith(String.format("%s%s%s",METRIC_PATH_SEPARATOR,RESPONSE_CODE,METRIC_PATH_SEPARATOR))) {
+    			printCollectiveObservedSum(memberPrefix + FAILURES, metrics.getFailureCount());
+            	printCollectiveObservedCurrent(memberPrefix + ERROR_RATE_PERCENTAGE, metrics.getErrorRatePercentage());
+    		}
+    		
         	printCollectiveObservedCurrent(memberPrefix + AVERGAGE_RESPONSE_TIME, metrics.getAvgResponseTime());
         	
         	if (includePageMetrics) {
