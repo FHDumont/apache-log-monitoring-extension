@@ -8,7 +8,7 @@
 package com.appdynamics.extensions.logmonitor.apache;
 
 import java.io.File;
-
+// todo: move this file to the utils package
 /**
  * @author Florencio Sarmiento
  *

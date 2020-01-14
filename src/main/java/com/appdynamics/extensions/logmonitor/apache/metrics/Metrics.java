@@ -84,7 +84,7 @@ public class Metrics {
 		BigInteger totalRequests = getHitCount().add(getFailureCount());
 		
 		BigInteger errorRate = BigInteger.ZERO;
-		
+		//TODO: Please use .equals instead of != while comparing two objects. != will only compare references. .equals will compare the content of the two objects
 		if(getFailureCount() != BigInteger.ZERO) {
 			errorRate = (getFailureCount().multiply(BigInteger.valueOf(100))).divide(totalRequests);
 		}
@@ -95,7 +95,7 @@ public class Metrics {
 	public BigInteger getAvgResponseTime() {
 		BigInteger totalRequests = getHitCount().add(getFailureCount());
 		BigInteger avgResponseTime = BigInteger.ZERO;
-		
+		//TODO: Same comment as line 87
 		if(getTotalResponseTime() != BigInteger.ZERO && totalRequests != BigInteger.ZERO) {
 			avgResponseTime = getTotalResponseTime().divide(totalRequests);
 		}

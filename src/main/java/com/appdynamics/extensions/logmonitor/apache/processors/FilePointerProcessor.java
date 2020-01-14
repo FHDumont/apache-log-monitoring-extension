@@ -46,7 +46,8 @@ public class FilePointerProcessor {
 	}
 
 	public FilePointer getFilePointer(String dynamicLogPath, String actualLogPath) {
-		
+		//TODO: I see you've changed this to work for a Windows environment. I don't think this will work in a linux environment though.
+		//TODO: You can add a check here for the OS using System.getProperty("os.name") and change the dynamicLogPath accordingly
 		dynamicLogPath = dynamicLogPath.replace("\\", "/");
 		
 		if (filePointers.containsKey(dynamicLogPath)) {

@@ -4,7 +4,8 @@
  * This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
  * The copyright notice above does not evidence any actual or intended publication of such source code.
  */
-
+/* TODO: I would highly recommend using version 2.2.0 of the extensions framework. It would take away a lot of boilerplate code
+*/
 package com.appdynamics.extensions.logmonitor.apache;
 
 import static com.appdynamics.extensions.logmonitor.apache.Constants.*;
@@ -46,7 +47,7 @@ import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException
  *
  */
 public class ApacheLogMonitor extends AManagedMonitor {
-	
+	//TODO: logger should be private
 	public static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.logmonitor.apache.ApacheLogMonitor");
 	
 	private volatile FilePointerProcessor filePointerProcessor;
@@ -101,7 +102,6 @@ public class ApacheLogMonitor extends AManagedMonitor {
 				}
 			}
 		}
-		
 		throw new TaskExecutionException("Apache Log Monitoring task completed with failures.");
 	}
 	

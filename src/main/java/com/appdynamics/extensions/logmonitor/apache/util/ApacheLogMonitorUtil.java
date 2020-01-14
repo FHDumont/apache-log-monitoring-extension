@@ -28,6 +28,7 @@ import com.singularity.ee.agent.systemagent.api.AManagedMonitor;
  *
  */
 public class ApacheLogMonitorUtil {
+	//TODO make this private
 	public static final Logger LOGGER = Logger.getLogger("com.appdynamics.extensions.logmonitor.apache.util.ApacheLogMonitorUtil");
 	
     public static String resolvePath(String filename) {
@@ -108,7 +109,8 @@ public class ApacheLogMonitorUtil {
 			LOGGER.warn(String.format("Invalid percentile configuration \"%d\" detected", percentile));
 			return defaultValue;
 		}
-		
+
+		//TODO: Sorting the list is unnecessary (and expensive if the list if huge) IMO. It does not impact your calculation below
 		Collections.sort(inputs);
 		
 		int nthPercentileIndex = Math.round(inputs.size() * (percentile / 100.0f))-1;
