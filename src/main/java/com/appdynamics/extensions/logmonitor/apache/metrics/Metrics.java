@@ -38,6 +38,10 @@ public class Metrics {
 
 	private BigInteger responseTimeMili200 = BigInteger.ZERO;
 
+	private BigInteger hit200CountRT = BigInteger.ZERO;
+
+	private BigInteger hitCountRT = BigInteger.ZERO;
+
 	// End New Features - Diego Pereira
 
 
@@ -57,41 +61,24 @@ public class Metrics {
 	//  End New Features - Diego Pereira
 	
 	public void addResponseTimeMicro(Integer responseTime) {
-
-		if (this.responseTimeMicro != BigInteger.ZERO) {
-			this.responseTimeMicro = this.responseTimeMicro.add(BigInteger.valueOf(responseTime)).divide(BigInteger.valueOf(2));
-		} else {
-			this.responseTimeMicro = this.responseTimeMicro.add(BigInteger.valueOf(responseTime));
-		}
-		
-		
+		this.hitCountRT = this.hitCountRT.add(BigInteger.ONE);
+		this.responseTimeMicro = this.responseTimeMicro.add(BigInteger.valueOf(responseTime));
 	}
 
 	public void addResponseTimeMili(Integer responseTime) {
 		
-		if (this.responseTimeMili != BigInteger.ZERO) {
-			this.responseTimeMili = this.responseTimeMili.add(BigInteger.valueOf(responseTime)).divide(BigInteger.valueOf(2));
-		} else {
-			this.responseTimeMili = this.responseTimeMili.add(BigInteger.valueOf(responseTime));
-		}
+		this.responseTimeMili = this.responseTimeMili.add(BigInteger.valueOf(responseTime));
 	}
 
 	public void addResponseTimeMicro200(Integer responseTime) {
-
-		if (this.responseTimeMicro200 != BigInteger.ZERO) {
-			this.responseTimeMicro200 = this.responseTimeMicro200.add(BigInteger.valueOf(responseTime)).divide(BigInteger.valueOf(2));
-		} else {
-			this.responseTimeMicro200 = this.responseTimeMicro200.add(BigInteger.valueOf(responseTime));
-		}
+		this.hit200CountRT = this.hit200CountRT.add(BigInteger.ONE);
+		this.responseTimeMicro200 = this.responseTimeMicro200.add(BigInteger.valueOf(responseTime));
+		
 	}
 
 	public void addResponseTimeMili200(Integer responseTime) {
 		
-		if (this.responseTimeMili200 != BigInteger.ZERO) {
-			this.responseTimeMili200 = this.responseTimeMili200.add(BigInteger.valueOf(responseTime)).divide(BigInteger.valueOf(2));
-		} else {
-			this.responseTimeMili200 = this.responseTimeMili200.add(BigInteger.valueOf(responseTime));
-		}
+		this.responseTimeMili200 = this.responseTimeMili200.add(BigInteger.valueOf(responseTime));
 	}
 
 	public void incrementHit200Count() {
@@ -121,25 +108,45 @@ public class Metrics {
 
 	public BigInteger getResponseTimeMicro() {
 		BigInteger avgResponseTime;
-		avgResponseTime = responseTimeMicro;
+		if (this.hitCountRT != BigInteger.ZERO) {
+			avgResponseTime = responseTimeMicro.divide(this.hitCountRT);
+		} else {
+			avgResponseTime = responseTimeMicro;
+		}
+		
 		return avgResponseTime;
 	}
 
 	public BigInteger getResponseTimeMili() {
 		BigInteger avgResponseTime;
-		avgResponseTime = responseTimeMili;
+		if (this.hitCountRT != BigInteger.ZERO) {
+			avgResponseTime = responseTimeMili.divide(this.hitCountRT);
+		} else {
+			avgResponseTime = responseTimeMili;
+		}
+		
 		return avgResponseTime;
 	}
 
 	public BigInteger getResponseTimeMicro200() {
 		BigInteger avgResponseTime;
-		avgResponseTime = responseTimeMicro200;
+		if (this.hit200CountRT != BigInteger.ZERO) {
+			avgResponseTime = responseTimeMicro200.divide(this.hit200CountRT);
+		} else {
+			avgResponseTime = responseTimeMicro200;
+		}
+		
 		return avgResponseTime;
 	}
 
 	public BigInteger getResponseTimeMili200() {
 		BigInteger avgResponseTime;
-		avgResponseTime = responseTimeMili200;
+		if (this.hit200CountRT != BigInteger.ZERO) {
+			avgResponseTime = responseTimeMili200.divide(this.hit200CountRT);
+		} else {
+			avgResponseTime = responseTimeMili200;
+		}
+		
 		return avgResponseTime;
 	}
 

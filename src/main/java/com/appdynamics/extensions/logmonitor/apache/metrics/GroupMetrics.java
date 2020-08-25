@@ -58,7 +58,7 @@ public class GroupMetrics extends Metrics {
 	}
 
 	public void incrementGroupAndMemberMetrics(String memberKey, Integer bandwidth, boolean isPageView, Integer response, Integer responseTimeMicro, Integer responseTimeMicro200, Integer responseTimeMili, Integer responseTimeMili200) {
-		incrementGroupMetrics(bandwidth, isPageView, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
+		incrementGroupMetrics(bandwidth, isPageView);
 
 		incrementMemberNewMetrics(memberKey, bandwidth, isPageView, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
 	}
@@ -103,24 +103,25 @@ public class GroupMetrics extends Metrics {
 			else if(response >= 300) {
 				counter.incrementHitNon200Count();
 			}
+
+			if (responseTimeMicro != null) {
+				counter.addResponseTimeMicro(responseTimeMicro);
+			}
+	
+			if (responseTimeMicro200 != null) {
+				counter.addResponseTimeMicro200(responseTimeMicro200);
+			}
+	
+			if (responseTimeMili != null) {
+				counter.addResponseTimeMili(responseTimeMili);
+			}
+	
+			if (responseTimeMili200 != null) {
+				counter.addResponseTimeMili200(responseTimeMili200);
+			}
+	
 		}
 		
-		if (responseTimeMicro != null) {
-			counter.addResponseTimeMicro(responseTimeMicro);
-		}
-
-		if (responseTimeMicro200 != null) {
-			counter.addResponseTimeMicro200(responseTimeMicro200);
-		}
-
-		if (responseTimeMili != null) {
-			counter.addResponseTimeMili(responseTimeMili);
-		}
-
-		if (responseTimeMili200 != null) {
-			counter.addResponseTimeMili200(responseTimeMili200);
-		}
-
 		if (bandwidth != null) {
 			counter.addBandwidth(bandwidth);
 		}
