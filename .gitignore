@@ -1,5 +1,9 @@
 .classpath
 .project
 .settings/
-target/
+target/**
+target/**/**
+target/**/**/**
+machineagent-bundle-64bit-linux-20.8.0.2713.zip
+
 .DS_Store
