@@ -76,9 +76,14 @@ public class SpiderProcessorTest {
 		
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
-		
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
+		Integer response = 200;
+
 		for (String spider: getTestSpiders()) {
-			classUnderTest.processMetrics(spider, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(spider, testBandwidth, true, testMetrics, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
 		}
 		
 		assertEquals(BigInteger.valueOf(5), testMetrics.getSpiderMetrics().getHitCount());
@@ -99,9 +104,14 @@ public class SpiderProcessorTest {
 		
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
+		Integer response = 200;
 		
 		for (String spider: getTestSpiders()) {
-			classUnderTest.processMetrics(spider, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(spider, testBandwidth, true, testMetrics, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
 		}
 		
 		assertEquals(BigInteger.valueOf(5), testMetrics.getSpiderMetrics().getHitCount());

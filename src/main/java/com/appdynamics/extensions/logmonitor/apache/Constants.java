@@ -40,6 +40,22 @@ public final class Constants {
 	public static final String AGENT = "agent";
 	
 	public static final String HOST = "clientip";
+
+	// New Features - Diego Pereira
+	
+	public static final String REQUEST_PORT = "portnumber";
+	
+	public static final String REQUEST_VERB = "verb";
+
+	public static final String REQUEST_MILI = "miliseg";
+
+	public static final String REQUEST_SEG = "seg";
+
+	public static final String EXTRA_HOSTPORT = "hostport";
+	
+	public static final String LOG_DATETIME = "timestamp";
+
+	// End New Features
 	
 	public static final String SPIDER = "Spider";
 	
@@ -54,6 +70,22 @@ public final class Constants {
 	public static final String TOTAL_PAGES = "Total Pages";
 	
 	public static final String TOTAL_BANDWIDTH = "Total Bandwidth (bytes)";
+
+	// New Features - Diego Pereira
+
+	public static final String TOTAL_200_HITS = "Total Success Pages View";
+	public static final String TOTAL_NON_200_HITS = "Total Non Success Pages View";
+
+	public static final String HITS_200 = "Success Pages View";
+	public static final String HITS_NON_200 = "Non Success Pages View";
+
+
+	public static final String AVG_RESPONSETIME_MICRO = "Avg Response Time (micro)";
+	public static final String AVG_RESPONSETIME_MICRO200 = "Avg Normal Response Time (micro)";
+	public static final String AVG_RESPONSETIME_MILI = "Avg Response Time (mili)";
+	public static final String AVG_RESPONSETIME_MILI200 = "Avg Normal Response Time (mili)";
+
+	// End New Features - Diego Pereira
 	
 	public static final String HITS = "Hits";
 	

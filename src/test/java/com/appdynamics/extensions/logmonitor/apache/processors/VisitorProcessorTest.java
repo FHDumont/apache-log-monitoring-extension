@@ -58,9 +58,14 @@ public class VisitorProcessorTest {
 		
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
-		
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
+		Integer response = 200;
+
 		for (String host: getTestHosts()) {
-			classUnderTest.processMetrics(host, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(host, testBandwidth, true, testMetrics, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
 		}
 		
 		assertEquals(BigInteger.valueOf(5), testMetrics.getVisitorMetrics().getHitCount());
@@ -81,9 +86,14 @@ public class VisitorProcessorTest {
 		
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
+		Integer response = 200;
 		
 		for (String host: getTestHosts()) {
-			classUnderTest.processMetrics(host, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(host, testBandwidth, true, testMetrics, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
 		}
 		
 		assertEquals(BigInteger.valueOf(5), testMetrics.getVisitorMetrics().getHitCount());

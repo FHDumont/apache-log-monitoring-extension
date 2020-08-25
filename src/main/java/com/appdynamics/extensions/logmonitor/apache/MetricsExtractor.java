@@ -18,7 +18,14 @@ import oi.thekraken.grok.api.Grok;
 import oi.thekraken.grok.api.Match;
 import oi.thekraken.grok.api.exception.GrokException;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+//import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.time.LocalDateTime;
+
+
 import org.codehaus.jackson.map.ObjectMapper;
 
 import ua_parser.Client;
@@ -39,8 +46,7 @@ import com.appdynamics.extensions.logmonitor.apache.processors.VisitorProcessor;
  */
 public class MetricsExtractor {
 	
-	private static final Logger LOGGER = 
-			Logger.getLogger("com.singularity.extensions.logmonitor.apache.MetricsExtractor");
+	private static final Logger LOGGER = LogManager.getLogger("com.appdynamics.extensions.logmonitor.apache.MetricsExtractor");
 	
 	private ApacheLog apacheLogConfig;
 	
@@ -69,17 +75,91 @@ public class MetricsExtractor {
 		try {
 			Match gm = grok.match(data);
 			gm.captures();
-			Map<String, Object> rawData = mapper.readValue(gm.toJson(), Map.class);
+			LOGGER.info(String.format(
+								"Data JSON [%s]",
+								gm.toJson()));
 			
+			Map<String, Object> rawData = mapper.readValue(gm.toJson(), Map.class);
+
+			
+			LOGGER.info(String.format(
+							"Debug Test [%s]",
+							data));
+							
 			if (rawData != null && !rawData.isEmpty()) {
+								
+								
+				LOGGER.info(String.format(
+								"Data Matched [%s]",
+								data));
+
 				String host = (String) rawData.get(HOST);
 				Integer response = (Integer) rawData.get(RESPONSE);
 				Integer bandwidth = (Integer) rawData.get(BYTES);
 				String request = requestProcessor.removeParam(((String) rawData.get(REQUEST)));
 				String userAgent = (String) rawData.get(AGENT);
-				
+
 				boolean isPageView = requestProcessor.isPage(request);
 				Client agentInfo = parseUserAgent(userAgent);
+
+				// New Features - Diego Pereira
+
+				Integer port = (Integer) rawData.get(REQUEST_PORT);
+				String verb = (String) rawData.get(REQUEST_VERB);
+				
+				Double rmicrodouble;
+				Double rmilidouble;
+
+
+				// Parse Response Time
+				try {
+					Integer rmicroint = (Integer) rawData.get(REQUEST_MILI);
+					rmicrodouble = Double.valueOf(rmicroint);
+					
+				} catch (Exception e) {
+					LOGGER.info(e.getMessage());
+					LOGGER.info("Trying get from String");
+					rmicrodouble = Double.parseDouble((String) rawData.get(REQUEST_MILI));
+				}
+				
+				try {
+					Integer rmiliint = (Integer) rawData.get(REQUEST_SEG);
+					rmilidouble = Double.valueOf(rmiliint);
+					
+				} catch (Exception e) {
+					LOGGER.info(e.getMessage());
+					LOGGER.info("Trying get from String");
+					rmilidouble = Double.parseDouble((String) rawData.get(REQUEST_SEG));
+				}
+
+				Integer rmicro = (int) (Math.round(rmicrodouble * 1000.0)) ;
+				Integer rmili = (int) (Math.round(rmilidouble * 1000.0));
+
+
+				Integer rmicro200;
+				Integer rmili200;
+
+
+				if (response >= 200 && response < 300) {
+					rmicro200 = rmicro;
+					rmili200 = rmili;
+
+				} else {
+					rmicro200 = null;
+					rmili200 = null;
+				}
+
+				//String rehostport = (String) rawData.get(EXTRA_HOSTPORT);
+				String ldatetime = (String) rawData.get(LOG_DATETIME);
+
+				Integer current_minute = LocalDateTime.now().getMinute();
+
+				LOGGER.info(String.format(
+							"Got Current Minute [%s], DateTime [%s], Host [%s], Port [%s], Verb [%s], Request [%s], User-Agent [%s], OS [%s], Status [%s], Bytes [%s], Micro [%s], Mili [%s]",
+							current_minute, ldatetime, host, port, verb, request, agentInfo.userAgent.family, agentInfo.os.family, response, bandwidth, rmicro, rmili));
+
+				// End New Features
+
 				
 				if (!isToMonitorMetrics(host, request, agentInfo)) {
 					if (LOGGER.isDebugEnabled()) {
@@ -106,11 +186,12 @@ public class MetricsExtractor {
 				
 				if (spiderProcessor.isSpider(agentInfo.device.family, request)) {
 					spiderProcessor.processMetrics(agentInfo.userAgent.family, bandwidth, 
-							isPageView, apacheLogMetrics);
+							isPageView, apacheLogMetrics, response, rmicro, rmicro200, rmili, rmili200);
+
 					
 				} else {
 					visitorProcessor.processMetrics(host, bandwidth, 
-							isPageView, apacheLogMetrics);
+							isPageView, apacheLogMetrics, response, rmicro, rmicro200, rmili, rmili200);
 					
 					browserProcessor.processMetrics(agentInfo.userAgent.family, 
 							bandwidth, isPageView, apacheLogMetrics);
@@ -120,7 +201,7 @@ public class MetricsExtractor {
 						bandwidth, isPageView, apacheLogMetrics);
 				
 				requestProcessor.processMetrics(request, bandwidth, 
-						isPageView, apacheLogMetrics);
+						isPageView, apacheLogMetrics, response, rmicro, rmicro200, rmili, rmili200);
 				
 				responseCodeProcessor.processMetrics(response, bandwidth, 
 						isPageView, apacheLogMetrics);
@@ -139,6 +220,7 @@ public class MetricsExtractor {
 			String userAgentPatternFilePath) throws GrokException, FileNotFoundException {
 		this.grok = Grok.create(resolvePath(grokPatternFilePath), 
 				apacheLogConfig.getLogPattern());
+		LOGGER.info(String.format("Grok Pattern: [%s] .", apacheLogConfig.getLogPattern()) );
 		this.mapper = new ObjectMapper();
 		this.userAgentParser = new Parser(
 				new FileInputStream(resolvePath(userAgentPatternFilePath)));

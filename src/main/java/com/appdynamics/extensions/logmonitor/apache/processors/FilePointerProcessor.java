@@ -16,7 +16,11 @@ import java.net.URLDecoder;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+//import org.apache.log4j.Logger;
+//import org.slf4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -28,7 +32,7 @@ import com.appdynamics.extensions.logmonitor.apache.ApacheLogMonitor;
  */
 public class FilePointerProcessor {
 	
-	public static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.logmonitor.apache.FilePointerProcessor");
+	public static final Logger LOGGER = LogManager.getLogger("com.singularity.extensions.logmonitor.apache.FilePointerProcessor");
 	
 	private ConcurrentHashMap<String, FilePointer> filePointers = new ConcurrentHashMap<String, FilePointer>();
 	

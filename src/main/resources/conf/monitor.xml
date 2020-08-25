@@ -11,8 +11,10 @@
     <description>ApacheLog monitor</description>
     <monitor-configuration></monitor-configuration>
     <monitor-run-task>
+        <execution-style>continuous</execution-style>
+        <!-- To get more accurated results please leave running in continous mode
         <execution-style>periodic</execution-style>
-        <execution-frequency-in-seconds>60</execution-frequency-in-seconds>
+        <execution-frequency-in-seconds>60</execution-frequency-in-seconds> -->
         <name>ApacheLog Monitor Run task</name>
         <display-name>ApacheLog Monitor Run task</display-name>
         <description>ApacheLog Monitor Run task</description>

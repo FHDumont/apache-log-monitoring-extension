@@ -59,13 +59,14 @@ public class RequestProcessor {
 	}
 	
 	public void processMetrics(String page, Integer bandwidth, 
-			boolean isPageView, ApacheLogMetrics apacheLogMetrics) {
+			boolean isPageView, ApacheLogMetrics apacheLogMetrics, Integer response, Integer responseTimeMicro, Integer responseTimeMicro200, Integer responseTimeMili, Integer responseTimeMili200) {
 		
 		if (isPageView) {
 			if (isMatch(page, displayIncludesPattern)) {
 				apacheLogMetrics.getPageMetrics()
-					.incrementGroupAndMemberMetrics(page, bandwidth, isPageView);
-				
+					.incrementGroupAndMemberMetrics(page, bandwidth, isPageView, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
+
+
 			} else {
 				apacheLogMetrics.getPageMetrics()
 					.incrementGroupMetrics(bandwidth, isPageView);

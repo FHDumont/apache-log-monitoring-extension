@@ -68,10 +68,12 @@ HOUR (?:2[0123]|[01]?[0-9])
 MINUTE (?:[0-5][0-9])
 # '60' is a leap second in most time standards and thus is valid.
 SECOND (?:(?:[0-5]?[0-9]|60)(?:[:.,][0-9]+)?)
+MILISECOND (?:[0-9]+)
 TIME (?!<[0-9])%{HOUR}:%{MINUTE}(?::%{SECOND})(?![0-9])
 # datestamp is YYYY/MM/DD-HH:MM:SS.UUUU (or something like it)
 DATE_US %{MONTHNUM}[/-]%{MONTHDAY}[/-]%{YEAR}
 DATE_EU %{MONTHDAY}[./-]%{MONTHNUM}[./-]%{YEAR}
+DATETIME_BANCO %{YEAR}[./-]%{MONTHNUM}[./-]%{MONTHDAY}[./-]%{HOUR}[./-]%{MINUTE}[./-]%{SECOND}[./-]%{MILISECOND}
 ISO8601_TIMEZONE (?:Z|[+-]%{HOUR}(?::?%{MINUTE}))
 ISO8601_SECOND (?:%{SECOND}|60)
 TIMESTAMP_ISO8601 %{YEAR}-%{MONTHNUM}-%{MONTHDAY}[T ]%{HOUR}:?%{MINUTE}(?::?%{SECOND})?%{ISO8601_TIMEZONE}?
@@ -82,6 +84,8 @@ DATESTAMP_RFC822 %{DAY} %{MONTH} %{MONTHDAY} %{YEAR} %{TIME} %{TZ}
 DATESTAMP_RFC2822 %{DAY}, %{MONTHDAY} %{MONTH} %{YEAR} %{TIME} %{ISO8601_TIMEZONE}
 DATESTAMP_OTHER %{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{TZ} %{YEAR}
 DATESTAMP_EVENTLOG %{YEAR}%{MONTHNUM2}%{MONTHDAY}%{HOUR}%{MINUTE}%{SECOND}
+
+
 
 # Syslog Dates: Month Day HH:MM:SS
 SYSLOGTIMESTAMP %{MONTH} +%{MONTHDAY} %{TIME}
@@ -100,6 +104,8 @@ SYSLOGBASE %{SYSLOGTIMESTAMP:timestamp} (?:%{SYSLOGFACILITY} )?%{SYSLOGHOST:logs
 MESSAGESLOG %{SYSLOGBASE} %{DATA}
 
 COMMONAPACHELOG %{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-)
+CUSTOMAPACHELOG %{IPORHOST:clientip},%{DATETIME_BANCO:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{DATA:miliseg}|-),\(micro-seg\),(?:%{DATA:seg}|-),\(seg\),(?<trash>.*)
+CUSTOMAPACHELOG2 %{IPORHOST:clientip},%{DATETIME_BANCO:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{DATA:miliseg}|-),\(micro-seg\),(?:%{DATA:seg}|-),\(seg\),(?:%{HOSTPORT:hostport}|-),(?<trash>.*)
 COMBINEDAPACHELOG %{COMMONAPACHELOG} %{QS:referrer} %{QS:agent}
 COMMONAPACHELOG_DATATYPED %{IPORHOST:clientip} %{USER:ident;boolean} %{USER:auth} \[%{HTTPDATE:timestamp;date;dd/MMM/yyyy:HH:mm:ss Z}\] "(?:%{WORD:verb;string} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion;float})?|%{DATA:rawrequest})" %{NUMBER:response;int} (?:%{NUMBER:bytes;long}|-)
 

@@ -79,6 +79,38 @@ public class ApacheLogMetrics {
 				.add(getSpiderMetrics().getBandwidth());
 	}
 
+	// New Features - Diego Pereira 
+
+	public BigInteger getTotalHit200Count() {
+		return getVisitorMetrics().getHit200Count()
+				.add(getSpiderMetrics().getHit200Count());
+	}
+	public BigInteger getTotalHitNon200Count() {
+		return getVisitorMetrics().getHitNon200Count()
+				.add(getSpiderMetrics().getHitNon200Count());
+	}
+
+	public BigInteger getResponseTimeMicro() {
+		return getVisitorMetrics().getResponseTimeMicro()
+				.add(getSpiderMetrics().getResponseTimeMicro());
+	}
+	public BigInteger getResponseTimeMicro200() {
+		return getVisitorMetrics().getResponseTimeMicro200()
+				.add(getSpiderMetrics().getResponseTimeMicro200());
+	}
+
+	public BigInteger getResponseTimeMili() {
+		return getVisitorMetrics().getResponseTimeMili()
+				.add(getSpiderMetrics().getResponseTimeMili());
+	}
+	
+	public BigInteger getResponseTimeMili200() {
+		return getVisitorMetrics().getResponseTimeMili200()
+				.add(getSpiderMetrics().getResponseTimeMili200());
+	}
+
+	// End New Features - Diego Pereira
+
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this,

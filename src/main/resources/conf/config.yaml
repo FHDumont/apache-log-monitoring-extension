@@ -1,9 +1,9 @@
 apacheLogs:
-  - displayName: ""
-    logDirectory: ""
-    logName: ""
-    logPattern: ""
-    hitResponseCodes: [ ] #leave null to use default values
+  - displayName: "Apache ABC - Server 1 - Production"
+    logDirectory: "/opt/apache-tomcat/logs"
+    logName: "localhost_access_log.*.txt"
+    logPattern: "%{CUSTOMAPACHELOG}"
+    hitResponseCodes: [ 200, 202, 305, 304, 400, 401, 402 , 403 , 404, 500 ] #leave null to use default values
     nonPageExtensions: [ ] #leave null to use default values
 
     metricsFilterForCalculation:
@@ -16,10 +16,10 @@ apacheLogs:
     individualMetricsToDisplay:
        includeVisitors: [ ]
        includeSpiders: [ ]
-       includePages: [ ]
+       includePages: [ ".*"]
        includeBrowsers: [ ]
        includeOs: [ ]
-       includeResponseCodes: [ ]
+       includeResponseCodes: [ 200, 202, 400, 401, 402 , 403 , 404, 500 ]
         
 # Number of concurrent threads
 noOfThreads: 3

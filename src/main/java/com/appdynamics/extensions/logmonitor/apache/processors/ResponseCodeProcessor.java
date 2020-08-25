@@ -14,7 +14,7 @@ import java.util.Set;
 import com.appdynamics.extensions.logmonitor.apache.metrics.ApacheLogMetrics;
 
 /**
- * @author Florencio Sarmiento
+ * @author Diego Pereira
  *
  */
 public class ResponseCodeProcessor {

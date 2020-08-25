@@ -26,7 +26,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+//import org.slf4j.Logger;
 
 import com.appdynamics.extensions.logmonitor.apache.config.ApacheLog;
 import com.appdynamics.extensions.logmonitor.apache.config.Configuration;
@@ -41,12 +44,12 @@ import com.singularity.ee.agent.systemagent.api.TaskOutput;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 
 /**
- * @author Florencio Sarmiento
+ * @author Diego Pereira
  *
  */
 public class ApacheLogMonitor extends AManagedMonitor {
 	
-	public static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.logmonitor.apache.ApacheLogMonitor");
+	public static final Logger LOGGER = LogManager.getLogger("com.appdynamics.extensions.logmonitor.apache.ApacheLogMonitor");
 	
 	private volatile FilePointerProcessor filePointerProcessor;
 	
@@ -165,12 +168,18 @@ public class ApacheLogMonitor extends AManagedMonitor {
     }
     
     private void uploadSummaryMetrics(String apacheLogPrefix, ApacheLogMetrics apacheLogMetrics) {
-    	printCollectiveObservedCurrent(apacheLogPrefix + TOTAL_HITS, 
+    	printCollectiveObservedSum(apacheLogPrefix + TOTAL_HITS, 
     			apacheLogMetrics.getTotalHitCount());
     	printCollectiveObservedCurrent(apacheLogPrefix + TOTAL_BANDWIDTH, 
     			apacheLogMetrics.getTotalBandwidth());
-    	printCollectiveObservedCurrent(apacheLogPrefix + TOTAL_PAGES, 
-    			apacheLogMetrics.getTotalPageViewCount());
+		printCollectiveObservedSum(apacheLogPrefix + TOTAL_PAGES, 
+				apacheLogMetrics.getTotalPageViewCount());
+		printCollectiveSumSum(apacheLogPrefix + TOTAL_200_HITS, apacheLogMetrics.getTotalHit200Count());
+		printCollectiveSumSum(apacheLogPrefix + TOTAL_NON_200_HITS, apacheLogMetrics.getTotalHitNon200Count());
+		printCollectiveAvgAvg(apacheLogPrefix + AVG_RESPONSETIME_MICRO, apacheLogMetrics.getResponseTimeMicro());
+		printCollectiveAvgAvg(apacheLogPrefix + AVG_RESPONSETIME_MICRO200, apacheLogMetrics.getResponseTimeMicro200());
+		printCollectiveAvgAvg(apacheLogPrefix + AVG_RESPONSETIME_MILI, apacheLogMetrics.getResponseTimeMili());
+		printCollectiveAvgAvg(apacheLogPrefix + AVG_RESPONSETIME_MILI200, apacheLogMetrics.getResponseTimeMili200());
     }
     
     private void uploadAllMetrics(String apacheLogPrefix, String groupName, 
@@ -183,7 +192,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
     private void uploadPageMetrics(String apacheLogPrefix, GroupMetrics groupMetrics) {
     	String groupPrefix = createGroupPrefix(apacheLogPrefix, PAGE);
     	uploadGroupMetrics(groupPrefix, groupMetrics, false);
-    	uploadMemberMetrics(groupPrefix, groupMetrics, false);
+    	uploadMemberNewMetrics(groupPrefix, groupMetrics, false);
     }
     
     private void uploadResponseCodeMetrics(String apacheLogPrefix, GroupMetrics groupMetrics) {
@@ -193,11 +202,21 @@ public class ApacheLogMonitor extends AManagedMonitor {
     
     private void uploadGroupMetrics(String groupPrefix, GroupMetrics groupMetrics, 
     		boolean includePageMetrics) {
-    	printCollectiveObservedCurrent(groupPrefix + TOTAL_HITS, groupMetrics.getHitCount());
-    	printCollectiveObservedCurrent(groupPrefix + TOTAL_BANDWIDTH, groupMetrics.getBandwidth());
+		printCollectiveObservedSum(groupPrefix + TOTAL_HITS, groupMetrics.getHitCount());
+
+		if (groupPrefix.contains(PAGE)) {
+			
+			printCollectiveSumSum(groupPrefix + TOTAL_200_HITS, groupMetrics.getHit200Count());
+			printCollectiveSumSum(groupPrefix + TOTAL_NON_200_HITS, groupMetrics.getHitNon200Count());
+			printCollectiveAvgAvg(groupPrefix + AVG_RESPONSETIME_MICRO, groupMetrics.getResponseTimeMicro());
+			printCollectiveAvgAvg(groupPrefix + AVG_RESPONSETIME_MICRO200, groupMetrics.getResponseTimeMicro200());
+			printCollectiveAvgAvg(groupPrefix + AVG_RESPONSETIME_MILI, groupMetrics.getResponseTimeMili());
+			printCollectiveAvgAvg(groupPrefix + AVG_RESPONSETIME_MILI200, groupMetrics.getResponseTimeMili200());
+			printCollectiveSumSum(groupPrefix + TOTAL_BANDWIDTH, groupMetrics.getBandwidth());
+		}
     	
     	if (includePageMetrics) {
-    		printCollectiveObservedCurrent(groupPrefix + TOTAL_PAGES, groupMetrics.getPageViewCount());
+    		printCollectiveObservedSum(groupPrefix + TOTAL_PAGES, groupMetrics.getPageViewCount());
     	}
     }
     
@@ -208,11 +227,43 @@ public class ApacheLogMonitor extends AManagedMonitor {
     				groupPrefix, member.getKey(), METRIC_PATH_SEPARATOR);
     		
     		Metrics metrics = member.getValue();
-    		printCollectiveObservedCurrent(memberPrefix + HITS, metrics.getHitCount());
-        	printCollectiveObservedCurrent(memberPrefix + BANDWIDTH, metrics.getBandwidth());
-        	
+    		printCollectiveObservedSum(memberPrefix + HITS, metrics.getHitCount());
+			printCollectiveSumSum(memberPrefix + BANDWIDTH, metrics.getBandwidth());
+			if (memberPrefix.contains(PAGE)) {
+			
+				printCollectiveSumSum(memberPrefix + TOTAL_200_HITS, metrics.getHit200Count());
+				printCollectiveSumSum(memberPrefix + TOTAL_NON_200_HITS, metrics.getHitNon200Count());
+				printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO, metrics.getResponseTimeMicro());
+				printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO200, metrics.getResponseTimeMicro200());
+				printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MILI, metrics.getResponseTimeMili());
+				printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MILI200, metrics.getResponseTimeMili200());
+			}
+
         	if (includePageMetrics) {
-        		printCollectiveObservedCurrent(memberPrefix + PAGES, metrics.getPageViewCount());
+        		printCollectiveObservedSum(memberPrefix + PAGES, metrics.getPageViewCount());
+        	}
+    	}
+	}
+	
+    private void uploadMemberNewMetrics(String groupPrefix, GroupMetrics groupMetrics, 
+    		boolean includePageMetrics) {
+    	for (Map.Entry<String, Metrics> member : groupMetrics.getMembers().entrySet()) {
+    		String memberPrefix = String.format("%s%s%s", 
+    				groupPrefix, member.getKey(), METRIC_PATH_SEPARATOR);
+    		
+    		Metrics metrics = member.getValue();
+    		printCollectiveObservedSum(memberPrefix + HITS, metrics.getHitCount());
+			printCollectiveSumSum(memberPrefix + BANDWIDTH, metrics.getBandwidth());
+			printCollectiveSumSum(memberPrefix + TOTAL_200_HITS, metrics.getHit200Count());
+			printCollectiveSumSum(memberPrefix + TOTAL_NON_200_HITS, metrics.getHitNon200Count());
+			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO, metrics.getResponseTimeMicro());
+			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO200, metrics.getResponseTimeMicro200());
+			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MILI, metrics.getResponseTimeMili());
+			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MILI200, metrics.getResponseTimeMili200());
+
+
+        	if (includePageMetrics) {
+        		printCollectiveObservedSum(memberPrefix + PAGES, metrics.getPageViewCount());
         	}
     	}
     }
@@ -221,6 +272,29 @@ public class ApacheLogMonitor extends AManagedMonitor {
         printMetric(metricName, metricValue,
                 MetricWriter.METRIC_AGGREGATION_TYPE_OBSERVATION,
                 MetricWriter.METRIC_TIME_ROLLUP_TYPE_CURRENT,
+                MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE
+        );
+	}
+	
+	private void printCollectiveObservedSum(String metricName, BigInteger metricValue) {
+        printMetric(metricName, metricValue,
+                MetricWriter.METRIC_AGGREGATION_TYPE_OBSERVATION,
+                MetricWriter.METRIC_TIME_ROLLUP_TYPE_SUM,
+                MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE
+        );
+    }
+	
+	private void printCollectiveAvgAvg(String metricName, BigInteger metricValue) {
+        printMetric(metricName, metricValue,
+                MetricWriter.METRIC_AGGREGATION_TYPE_AVERAGE,
+                MetricWriter.METRIC_TIME_ROLLUP_TYPE_AVERAGE,
+                MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE
+        );
+    }
+	private void printCollectiveSumSum(String metricName, BigInteger metricValue) {
+        printMetric(metricName, metricValue,
+                MetricWriter.METRIC_AGGREGATION_TYPE_SUM,
+                MetricWriter.METRIC_TIME_ROLLUP_TYPE_SUM,
                 MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE
         );
     }

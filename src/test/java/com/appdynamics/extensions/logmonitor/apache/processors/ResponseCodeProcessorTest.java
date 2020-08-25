@@ -80,6 +80,11 @@ public class ResponseCodeProcessorTest {
 		List<Integer> testResponseCodes = Arrays.asList(200, 211, 214, 305, 354, 354);
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
+
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
 		
 		for (Integer responseCode : testResponseCodes) {
 			classUnderTest.processMetrics(responseCode, testBandwidth, true, testMetrics);
@@ -104,6 +109,11 @@ public class ResponseCodeProcessorTest {
 		List<Integer> testResponseCodes = Arrays.asList(200, 211, 214, 305, 354, 354);
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
+		
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
 		
 		for (Integer responseCode : testResponseCodes) {
 			classUnderTest.processMetrics(responseCode, testBandwidth, true, testMetrics);

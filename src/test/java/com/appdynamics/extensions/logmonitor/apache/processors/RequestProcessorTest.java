@@ -137,12 +137,18 @@ public class RequestProcessorTest {
 		
 		ApacheLogMetrics testMetrics = new ApacheLogMetrics();
 		Integer testBandwidth = 15;
+
+		Integer response = 200;
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
 		
 		List<String> pageUrls = Arrays.asList("/todisplay/myjsp.jsp",
 				"/test/url", "/test/mypage.html", "/todisplay/page.pdf");
 		
 		for (String page: pageUrls) {
-			classUnderTest.processMetrics(page, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(page, testBandwidth, true, testMetrics, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
 		}
 		
 		assertEquals(BigInteger.valueOf(4), testMetrics.getPageMetrics().getHitCount());
@@ -164,8 +170,14 @@ public class RequestProcessorTest {
 		List<String> pageUrls = Arrays.asList("/todisplay/myjsp.jsp",
 				"/test/url", "/test/mypage.html", "/todisplay/page.pdf");
 		
+		Integer response = 200;
+		Integer responseTimeMicro = 1000;
+		Integer responseTimeMicro200 = 1000;
+		Integer responseTimeMili = 1;
+		Integer responseTimeMili200 = 1;
+
 		for (String page: pageUrls) {
-			classUnderTest.processMetrics(page, testBandwidth, true, testMetrics);
+			classUnderTest.processMetrics(page, testBandwidth, true, testMetrics, response, responseTimeMicro, responseTimeMicro200, responseTimeMili, responseTimeMili200);
 		}
 		
 		assertEquals(BigInteger.valueOf(4), testMetrics.getPageMetrics().getHitCount());

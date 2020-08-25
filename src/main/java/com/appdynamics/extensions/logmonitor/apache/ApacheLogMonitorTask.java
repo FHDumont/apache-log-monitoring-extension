@@ -16,7 +16,10 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+//import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bitbucket.kienerj.OptimizedRandomAccessFile;
 
 import com.appdynamics.extensions.logmonitor.apache.config.ApacheLog;
@@ -32,7 +35,7 @@ import com.appdynamics.extensions.logmonitor.apache.processors.FilePointerProces
 public class ApacheLogMonitorTask implements Callable<ApacheLogMetrics> {
 	
 	private static final Logger LOGGER = 
-			Logger.getLogger("com.singularity.extensions.logmonitor.apache.ApacheLogMonitorTask");
+	LogManager.getLogger("com.appdynamics.extensions.logmonitor.apache.ApacheLogMonitorTask");
 	
 	private FilePointerProcessor filePointerProcessor;
 	

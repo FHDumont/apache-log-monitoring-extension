@@ -15,7 +15,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="com.singularity" additivity="false">
+	<logger name="com.appdynamics" additivity="false">
         <level value="debug"/>
         <appender-ref ref="stdout" />
     </logger>
