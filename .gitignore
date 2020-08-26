@@ -5,5 +5,6 @@ target/**
 target/**/**
 target/**/**/**
 machineagent-bundle-64bit-linux-20.8.0.2713.zip
-
+target/ApacheLogMonitor-2.0.0.zip
+target/
 .DS_Store
