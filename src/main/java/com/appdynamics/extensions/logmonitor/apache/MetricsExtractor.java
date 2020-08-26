@@ -132,7 +132,7 @@ public class MetricsExtractor {
 					rmilidouble = Double.parseDouble((String) rawData.get(REQUEST_SEG));
 				}
 
-				Integer rmicro = (int) (Math.round(rmicrodouble * 1000.0)) ;
+				Integer rmicro = (int) (Math.round(rmicrodouble)) ;
 				Integer rmili = (int) (Math.round(rmilidouble * 1000.0));
 
 
