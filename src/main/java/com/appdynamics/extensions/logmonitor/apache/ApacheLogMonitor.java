@@ -154,15 +154,36 @@ public class ApacheLogMonitor extends AManagedMonitor {
     
     private void uploadMetrics(Configuration config, List<ApacheLogMetrics> apacheLogMetricsList) {
     	for (ApacheLogMetrics apacheLogMetrics : apacheLogMetricsList) {
-    		String apacheLogPrefix = String.format("%s%s%s", getMetricPrefix(config),
+			String hackPrefix = getHackPrefix(config);
+			LOGGER.debug("HackPrefix: " + hackPrefix );
+				
+			String apacheLogPrefix;
+			if (hackPrefix.equals("true")) {
+				LOGGER.debug(String.format("HackPrefix true: %s", getMetricPrefix(config)));
+				apacheLogPrefix = String.format("%s", getMetricPrefix(config));
+			} else {
+				LOGGER.debug(String.format("HackPrefix false: %s", getMetricPrefix(config)));
+				apacheLogPrefix = String.format("%s%s%s", getMetricPrefix(config),
     				apacheLogMetrics.getApacheLogName(), METRIC_PATH_SEPARATOR);
-    		
+			}
+			
+    		if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug(String.format("HackPrefix: %s %s", hackPrefix, apacheLogPrefix));
+			}
+
     		uploadSummaryMetrics(apacheLogPrefix, apacheLogMetrics);
     		uploadAllMetrics(apacheLogPrefix, BROWSER, apacheLogMetrics.getBrowserMetrics());
     		uploadAllMetrics(apacheLogPrefix, OS, apacheLogMetrics.getOsMetrics());
     		uploadAllMetrics(apacheLogPrefix, SPIDER, apacheLogMetrics.getSpiderMetrics());
     		uploadAllMetrics(apacheLogPrefix, VISITOR, apacheLogMetrics.getVisitorMetrics());
-    		uploadPageMetrics(apacheLogPrefix, apacheLogMetrics.getPageMetrics());
+			
+			if (hackPrefix.equals("true")) {
+				uploadPageHackMetrics(apacheLogPrefix, apacheLogMetrics.getPageMetrics());
+			} else {
+				uploadPageMetrics(apacheLogPrefix, apacheLogMetrics.getPageMetrics());
+			}
+			
+    		
     		uploadResponseCodeMetrics(apacheLogPrefix, apacheLogMetrics.getResponseCodeMetrics());
     	}
     }
@@ -174,6 +195,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
     			apacheLogMetrics.getTotalBandwidth());
 		printCollectiveObservedSum(apacheLogPrefix + TOTAL_PAGES, 
 				apacheLogMetrics.getTotalPageViewCount());
+		printCollectiveSumSum(apacheLogPrefix + TOTAL_PAGES_CALLS, apacheLogMetrics.getTotalCallsCount());
 		printCollectiveSumSum(apacheLogPrefix + TOTAL_200_HITS, apacheLogMetrics.getTotalHit200Count());
 		printCollectiveSumSum(apacheLogPrefix + TOTAL_NON_200_HITS, apacheLogMetrics.getTotalHitNon200Count());
 		printCollectiveAvgAvg(apacheLogPrefix + AVG_RESPONSETIME_MICRO, apacheLogMetrics.getResponseTimeMicro());
@@ -193,6 +215,12 @@ public class ApacheLogMonitor extends AManagedMonitor {
     	String groupPrefix = createGroupPrefix(apacheLogPrefix, PAGE);
     	uploadGroupMetrics(groupPrefix, groupMetrics, false);
     	uploadMemberNewMetrics(groupPrefix, groupMetrics, false);
+	}
+	
+    private void uploadPageHackMetrics(String apacheLogPrefix, GroupMetrics groupMetrics) {
+    	String groupPrefix = createGroupPrefix(apacheLogPrefix, PAGE);
+    	uploadGroupMetrics(groupPrefix, groupMetrics, false);
+    	uploadMemberNewMetrics(apacheLogPrefix, groupMetrics, false);
     }
     
     private void uploadResponseCodeMetrics(String apacheLogPrefix, GroupMetrics groupMetrics) {
@@ -205,7 +233,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
 		printCollectiveObservedSum(groupPrefix + TOTAL_HITS, groupMetrics.getHitCount());
 
 		if (groupPrefix.contains(PAGE)) {
-			
+			printCollectiveSumSum(groupPrefix + TOTAL_PAGES_CALLS, groupMetrics.getTotalHitCount());
 			printCollectiveSumSum(groupPrefix + TOTAL_200_HITS, groupMetrics.getHit200Count());
 			printCollectiveSumSum(groupPrefix + TOTAL_NON_200_HITS, groupMetrics.getHitNon200Count());
 			printCollectiveAvgAvg(groupPrefix + AVG_RESPONSETIME_MICRO, groupMetrics.getResponseTimeMicro());
@@ -230,7 +258,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
     		printCollectiveObservedSum(memberPrefix + HITS, metrics.getHitCount());
 			printCollectiveSumSum(memberPrefix + BANDWIDTH, metrics.getBandwidth());
 			if (memberPrefix.contains(PAGE)) {
-			
+				printCollectiveSumSum(memberPrefix + TOTAL_PAGES_CALLS, metrics.getTotalHitCount());
 				printCollectiveSumSum(memberPrefix + TOTAL_200_HITS, metrics.getHit200Count());
 				printCollectiveSumSum(memberPrefix + TOTAL_NON_200_HITS, metrics.getHitNon200Count());
 				printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO, metrics.getResponseTimeMicro());
@@ -254,6 +282,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
     		Metrics metrics = member.getValue();
     		printCollectiveObservedSum(memberPrefix + HITS, metrics.getHitCount());
 			printCollectiveSumSum(memberPrefix + BANDWIDTH, metrics.getBandwidth());
+			printCollectiveSumSum(memberPrefix + TOTAL_PAGES_CALLS, metrics.getTotalHitCount());
 			printCollectiveSumSum(memberPrefix + TOTAL_200_HITS, metrics.getHit200Count());
 			printCollectiveSumSum(memberPrefix + TOTAL_NON_200_HITS, metrics.getHitNon200Count());
 			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO, metrics.getResponseTimeMicro());
@@ -331,6 +360,19 @@ public class ApacheLogMonitor extends AManagedMonitor {
 		}
 		
 		return metricPrefix;
+	}
+
+	private String getHackPrefix(Configuration config) {
+		String prefixHack = config.getPrefixHack();
+		
+		if (StringUtils.isBlank(prefixHack)) {
+			prefixHack = DEFAULT_HACK_PREFIX;
+			
+		} else {
+			prefixHack = prefixHack;
+		}
+		
+		return prefixHack;
 	}
     
     private String createGroupPrefix(String apacheLogPrefix, String groupName) {

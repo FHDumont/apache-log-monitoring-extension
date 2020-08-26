@@ -20,6 +20,8 @@ public class Configuration {
 
 	private String metricPrefix;
 
+	private String prefixHack;
+
 	private List<ApacheLog> apacheLogs;
 
 	private int noOfThreads;
@@ -30,6 +32,14 @@ public class Configuration {
 
 	public void setMetricPrefix(String metricPrefix) {
 		this.metricPrefix = metricPrefix;
+	}
+
+	public String getPrefixHack() {
+		return prefixHack;
+	}
+
+	public void setPrefixHack(String prefixHack) {
+		this.prefixHack = prefixHack;
 	}
 
 	public List<ApacheLog> getApacheLogs() {

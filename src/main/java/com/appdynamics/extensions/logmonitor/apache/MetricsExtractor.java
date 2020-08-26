@@ -75,21 +75,21 @@ public class MetricsExtractor {
 		try {
 			Match gm = grok.match(data);
 			gm.captures();
-			LOGGER.info(String.format(
+			LOGGER.debug(String.format(
 								"Data JSON [%s]",
 								gm.toJson()));
 			
 			Map<String, Object> rawData = mapper.readValue(gm.toJson(), Map.class);
 
 			
-			LOGGER.info(String.format(
+			LOGGER.debug(String.format(
 							"Debug Test [%s]",
 							data));
 							
 			if (rawData != null && !rawData.isEmpty()) {
 								
 								
-				LOGGER.info(String.format(
+				LOGGER.debug(String.format(
 								"Data Matched [%s]",
 								data));
 
@@ -127,8 +127,8 @@ public class MetricsExtractor {
 					rmilidouble = Double.valueOf(rmiliint);
 					
 				} catch (Exception e) {
-					LOGGER.info(e.getMessage());
-					LOGGER.info("Trying get from String");
+					LOGGER.debug(e.getMessage());
+					LOGGER.debug("Trying get from String");
 					rmilidouble = Double.parseDouble((String) rawData.get(REQUEST_SEG));
 				}
 
@@ -154,7 +154,7 @@ public class MetricsExtractor {
 
 				Integer current_minute = LocalDateTime.now().getMinute();
 
-				LOGGER.info(String.format(
+				LOGGER.debug(String.format(
 							"Got Current Minute [%s], DateTime [%s], Host [%s], Port [%s], Verb [%s], Request [%s], User-Agent [%s], OS [%s], Status [%s], Bytes [%s], Micro [%s], Mili [%s]",
 							current_minute, ldatetime, host, port, verb, request, agentInfo.userAgent.family, agentInfo.os.family, response, bandwidth, rmicro, rmili));
 

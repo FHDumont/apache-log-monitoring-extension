@@ -68,10 +68,14 @@ public class ApacheLogMetrics {
 		return getVisitorMetrics().getHitCount()
 				.add(getSpiderMetrics().getHitCount());
 	}
+	public BigInteger getTotalCallsCount() {
+		return getVisitorMetrics().getTotalHitCount()
+				.add(getSpiderMetrics().getTotalHitCount());
+	}
 	
 	public BigInteger getTotalPageViewCount() {
 		return getVisitorMetrics().getPageViewCount()
-				.add(getSpiderMetrics().getPageViewCount());
+				.add(getSpiderMetrics().getTotalHitCount());
 	}
 	
 	public BigInteger getTotalBandwidth() {

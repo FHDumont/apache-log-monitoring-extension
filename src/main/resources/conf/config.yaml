@@ -26,3 +26,5 @@ noOfThreads: 3
 
 #prefix used to show up metrics in AppDynamics 
 metricPrefix: "Custom Metrics|Apache Log Monitor|"
+
+prefixHack: "true"

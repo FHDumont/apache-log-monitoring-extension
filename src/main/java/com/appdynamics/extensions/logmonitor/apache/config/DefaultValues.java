@@ -26,6 +26,8 @@ public final class DefaultValues {
 	public static final String DEFAULT_METRIC_PATH = String.format("%s%s%s%s", "Custom Metrics", 
 			METRIC_PATH_SEPARATOR, "Apache Log Monitor", METRIC_PATH_SEPARATOR);
 	
+	public static final String DEFAULT_HACK_PREFIX = "false";
+
 	public static final int DEFAULT_NO_OF_THREADS = 3;
 	
 	public static final int THREAD_TIMEOUT = 60;

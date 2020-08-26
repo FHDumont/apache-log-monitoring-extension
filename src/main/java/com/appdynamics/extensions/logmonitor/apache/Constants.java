@@ -73,7 +73,11 @@ public final class Constants {
 
 	// New Features - Diego Pereira
 
+	public static final String TOTAL_PAGES_CALLS = "Total Pages View";
+	
 	public static final String TOTAL_200_HITS = "Total Success Pages View";
+
+
 	public static final String TOTAL_NON_200_HITS = "Total Non Success Pages View";
 
 	public static final String HITS_200 = "Success Pages View";

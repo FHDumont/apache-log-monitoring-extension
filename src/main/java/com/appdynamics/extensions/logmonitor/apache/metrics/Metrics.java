@@ -42,6 +42,8 @@ public class Metrics {
 
 	private BigInteger hitCountRT = BigInteger.ZERO;
 
+	private BigInteger totalHitCount = BigInteger.ZERO;
+
 	// End New Features - Diego Pereira
 
 
@@ -83,10 +85,12 @@ public class Metrics {
 
 	public void incrementHit200Count() {
 		this.hit200Count = this.hit200Count.add(BigInteger.ONE);
+		this.totalHitCount = this.totalHitCount.add(BigInteger.ONE);
 	}
 
 	public void incrementHitNon200Count() {
 		this.hitNon200Count = this.hitNon200Count.add(BigInteger.ONE);
+		this.totalHitCount = this.totalHitCount.add(BigInteger.ONE);
 	}
 
 	//  End New Features - Diego Pereira
@@ -94,6 +98,9 @@ public class Metrics {
 
 	public BigInteger getHitCount() {
 		return hitCount;
+	}
+	public BigInteger getTotalHitCount() {
+		return totalHitCount;
 	}
 
 	public BigInteger getPageViewCount() {
