@@ -252,7 +252,7 @@ Typical Metric Path: **Application Infrastructure Performance|\<Tier\>|Custom Me
 | Pages | No of times this response code is returned for any page request |
 
 ## Custom Dashboard Example
-![image](https://github.com/diegopereiraeng/apache-log-monitoring-extension/blob/master/sample_custom_dashboard.png)
+![image](https://github.com/diegopereiraeng/apache-log-monitoring-extension/blob/master/sample_custom_dashboard1.png)
 ![image](https://github.com/diegopereiraeng/apache-log-monitoring-extension/blob/master/sample_custom_dashboard2.png)
 ## Contributing
 
