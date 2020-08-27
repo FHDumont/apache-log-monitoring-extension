@@ -1,4 +1,43 @@
-# AppDynamics Apache Log Monitoring Extension
+# AppDynamics Apache Log Monitoring Extension Plus
+
+## What is New?
+
+Upgrade the log4j to log4j2
+
+Upgrade some other dependency libraries
+
+New Metrics:
+
+Apache
+ * Total Pages Views
+ * Total Total Success Page View *
+ * Total Total Non Success Page View *
+ * Normal Average Response Time (micro) **
+ * Average Response Time (micro)
+ * Normal Average Response Time (mili) **
+ * Average Response Time (mili)
+
+Per Page
+ * Total Pages Views
+ * Total Total Success Page View *
+ * Total Total Non Success Page View *
+ * Normal Average Response Time (micro) **
+ * Average Response Time (micro)
+ * Normal Average Response Time (mili) **
+ * Average Response Time (mili)
+
+
+\* Success is return code 2XX
+\*\* Normal Response Time is the average of 2XX calls only (others calls with return code 300 or higher will not count) 
+
+## What changed?
+
+Extensions run in continous mode now to collect all the logs in the minute, so you will have more accurated results.
+
+More Debugs in case of wrong configurations or incompatibilities.
+
+
+
 
 ## Use Case
 
@@ -115,6 +154,8 @@ To add your own custom grok expression, simply edit the file above. Note, you mu
 - response
 - bytes
 - request
+- microseg
+- miliseg
 
 Optional field used to determine the browser, os and spider details is as follow:
 
@@ -126,6 +167,21 @@ For example:
 COMMONAPACHELOG %{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-)
 
 MYCUSTOMAPACHELOG %{COMMONAPACHELOG} %{QS:referrer} %{QS:agent}
+
+For example 2:
+
+Log format IBM apache (Custom CSV Format):
+
+LogFormat "%h,%{%Y-%m-%d-%H.%M.%S.000000}t,%p,%H,%m,%l,%U,%q,%>s,(Res.Status),%b,(Bytes Trans),%D,(micro-seg),%T,(seg),%{WAS}e,%X" customLogcsv
+~~~
+
+Extension grok Example
+
+DATETIME_ESPECIFIC %{YEAR}[./-]%{MONTHNUM}[./-]%{MONTHDAY}[./-]%{HOUR}[./-]%{MINUTE}[./-]%{SECOND}[./-]%{MILISECOND}
+
+CUSTOMAPACHELOG %{IPORHOST:clientip},%{DATETIME_ESPECIFIC:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{NUMBER:microseg}|-),\(micro-seg\),(?:%{NUMBER:seg}|-),\(seg\),(?:%{HOSTPORT:hostport}|-),(?<trash>.*)
+
+
 ~~~
 
 You can use [Grok Debugger](https://grokdebug.herokuapp.com/) to validate your expression.
@@ -153,7 +209,15 @@ Typical Metric Path: **Application Infrastructure Performance|\<Tier\>|Custom Me
 | ----- | ----- |
 | Total Hits | Overall Total Hits (Visitor Hits + Spider Hits) |
 | Total Bandwidth (bytes) | Overall Total Bandwidth (Visitor Bandwidth + Spider Bandwidth) |
-| Total Pages | Overall Total Pages (Visitor Pages + Spider Pages) |
+| Total Pages Views | Overall Total Pages (Visitor Pages + Spider Pages) |
+| Total Total Success Page View | Overall Total (2XX return) Pages (Visitor Pages + Spider Pages) |
+| Total Total Non Success Page View | Overall Total (Non 2XX return) Pages (Visitor Pages + Spider Pages) |
+| Normal Average Response Time (micro) | 2XX return Average Response time |
+| Average Response Time (micro) | Average Response time |
+| Normal Average Response Time (mili) | 2XX return Average Response time |
+| Average Response Time (mili) | Average Response time |
+
+
 
 ### Visitor, Spider, OS and Browser
 
@@ -168,7 +232,16 @@ Typical Metric Path: **Application Infrastructure Performance|\<Tier\>|Custom Me
 | Metric | Description |
 | ----- | ----- |
 | Total Hits | No of hits |
-| Total Bandwidth (bytes) | Bandwidth size |
+| Total Pages Views | Overall Total Pages (Visitor Pages + Spider Pages) |
+| Total Total Success Page View | Overall Total (2XX return) Pages (Visitor Pages + Spider Pages) |
+| Total Total Non Success Page View | Overall Total (Non 2XX return) Pages (Visitor Pages + Spider Pages) |
+| Normal Average Response Time (micro) | 2XX return Average Response time |
+| Average Response Time (micro) | Average Response time |
+| Normal Average Response Time (mili) | 2XX return Average Response time |
+| Average Response Time (mili) | Average Response time |
+| Total Bandwidth (bytes) | Overall Total Bandwidth (Visitor Bandwidth + Spider Bandwidth) |
+
+
 
 ### Response Code
 
@@ -179,17 +252,14 @@ Typical Metric Path: **Application Infrastructure Performance|\<Tier\>|Custom Me
 | Pages | No of times this response code is returned for any page request |
 
 ## Custom Dashboard Example
-![image](http://community.appdynamics.com/t5/image/serverpage/image-id/1560iF816F2875A51A315/image-size/original?v=mpbl-1&px=-1)
-
+![image](https://github.com/diegopereiraeng/apache-log-monitoring-extension/blob/master/sample_custom_dashboard.png)
+![image](https://github.com/diegopereiraeng/apache-log-monitoring-extension/blob/master/sample_custom_dashboard2.png)
 ## Contributing
 
-Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/apache-log-monitoring-extension).
+Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/diegopereiraeng/apache-log-monitoring-extension).
 
-## Community
-
-Find out more in the [AppSphere](https://www.appdynamics.com/community/exchange/extension/apache-log-monitoring-extension/) community.
 
 ## Support
 
-For any questions or feature request, please contact [AppDynamics Support](mailto:help@appdynamics.com).
+For any questions or feature request, please create a issue here or a pull request =]
 

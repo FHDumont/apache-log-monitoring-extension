@@ -47,9 +47,9 @@ public final class Constants {
 	
 	public static final String REQUEST_VERB = "verb";
 
-	public static final String REQUEST_MILI = "miliseg";
+	public static final String REQUEST_MILI = "microseg";
 
-	public static final String REQUEST_SEG = "seg";
+	public static final String REQUEST_SEG = "miliseg";
 
 	public static final String EXTRA_HOSTPORT = "hostport";
 	
