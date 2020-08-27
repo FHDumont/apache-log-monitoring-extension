@@ -180,7 +180,8 @@ public class ApacheLogMonitor extends AManagedMonitor {
     		uploadAllMetrics(apacheLogPrefix, VISITOR, apacheLogMetrics.getVisitorMetrics());
 			
 			if (hackPrefix.equals("true")) {
-				uploadPageHackMetrics(pagePrefix, apacheLogMetrics.getPageMetrics());
+				LOGGER.debug("Hack Page Prefix = "+apacheLogPrefix.replace("Custom Metrics|Apache Log Monitor", "Custom Metrics|Apache Pages"));
+				uploadPageHackMetrics(apacheLogPrefix.replace("Custom Metrics|Apache Log Monitor", "Custom Metrics|Apache Pages"), apacheLogMetrics.getPageMetrics());
 			} else {
 				uploadPageMetrics(apacheLogPrefix, apacheLogMetrics.getPageMetrics());
 			}
