@@ -104,8 +104,8 @@ SYSLOGBASE %{SYSLOGTIMESTAMP:timestamp} (?:%{SYSLOGFACILITY} )?%{SYSLOGHOST:logs
 MESSAGESLOG %{SYSLOGBASE} %{DATA}
 
 COMMONAPACHELOG %{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-)
-CUSTOMAPACHELOG %{IPORHOST:clientip},%{DATETIME_BANCO:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{DATA:microseg}|-),\(micro-seg\),(?:%{DATA:miliseg}|-),\(seg\),(?<trash>.*)
-CUSTOMAPACHELOG2 %{IPORHOST:clientip},%{DATETIME_BANCO:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{DATA:microseg}|-),\(micro-seg\),(?:%{DATA:miliseg}|-),\(seg\),(?:%{HOSTPORT:hostport}|-),(?<trash>.*)
+CUSTOMAPACHELOG %{IPORHOST:clientip},%{DATETIME_BANCO:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{DATA:miliseg}|-),\(micro-seg\),(?:%{DATA:seg}|-),\(seg\),(?<trash>.*)
+CUSTOMAPACHELOG2 %{IPORHOST:clientip},%{DATETIME_BANCO:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{DATA:miliseg}|-),\(micro-seg\),(?:%{DATA:seg}|-),\(seg\),(?:%{HOSTPORT:hostport}|-),(?<trash>.*)
 COMBINEDAPACHELOG %{COMMONAPACHELOG} %{QS:referrer} %{QS:agent}
 COMMONAPACHELOG_DATATYPED %{IPORHOST:clientip} %{USER:ident;boolean} %{USER:auth} \[%{HTTPDATE:timestamp;date;dd/MMM/yyyy:HH:mm:ss Z}\] "(?:%{WORD:verb;string} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion;float})?|%{DATA:rawrequest})" %{NUMBER:response;int} (?:%{NUMBER:bytes;long}|-)
 

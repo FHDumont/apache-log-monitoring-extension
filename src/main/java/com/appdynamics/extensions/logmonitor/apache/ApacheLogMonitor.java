@@ -161,6 +161,8 @@ public class ApacheLogMonitor extends AManagedMonitor {
 			if (hackPrefix.equals("true")) {
 				LOGGER.debug(String.format("HackPrefix true: %s", getMetricPrefix(config)));
 				apacheLogPrefix = String.format("%s", getMetricPrefix(config));
+				pagePrefix = String.format("%s", getPagePrefix(config));
+				
 			} else {
 				LOGGER.debug(String.format("HackPrefix false: %s", getMetricPrefix(config)));
 				apacheLogPrefix = String.format("%s%s%s", getMetricPrefix(config),
@@ -178,7 +180,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
     		uploadAllMetrics(apacheLogPrefix, VISITOR, apacheLogMetrics.getVisitorMetrics());
 			
 			if (hackPrefix.equals("true")) {
-				uploadPageHackMetrics(apacheLogPrefix, apacheLogMetrics.getPageMetrics());
+				uploadPageHackMetrics(pagePrefix, apacheLogMetrics.getPageMetrics());
 			} else {
 				uploadPageMetrics(apacheLogPrefix, apacheLogMetrics.getPageMetrics());
 			}
@@ -193,8 +195,8 @@ public class ApacheLogMonitor extends AManagedMonitor {
     			apacheLogMetrics.getTotalHitCount());
     	printCollectiveObservedCurrent(apacheLogPrefix + TOTAL_BANDWIDTH, 
     			apacheLogMetrics.getTotalBandwidth());
-		printCollectiveObservedSum(apacheLogPrefix + TOTAL_PAGES, 
-				apacheLogMetrics.getTotalPageViewCount());
+		//printCollectiveObservedSum(apacheLogPrefix + TOTAL_PAGES, 
+		//		apacheLogMetrics.getTotalPageViewCount());
 		printCollectiveSumSum(apacheLogPrefix + TOTAL_PAGES_CALLS, apacheLogMetrics.getTotalCallsCount());
 		printCollectiveSumSum(apacheLogPrefix + TOTAL_200_HITS, apacheLogMetrics.getTotalHit200Count());
 		printCollectiveSumSum(apacheLogPrefix + TOTAL_NON_200_HITS, apacheLogMetrics.getTotalHitNon200Count());
@@ -244,7 +246,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
 		}
     	
     	if (includePageMetrics) {
-    		printCollectiveObservedSum(groupPrefix + TOTAL_PAGES, groupMetrics.getPageViewCount());
+    		//printCollectiveObservedSum(groupPrefix + TOTAL_PAGES, groupMetrics.getPageViewCount());
     	}
     }
     
@@ -268,7 +270,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
 			}
 
         	if (includePageMetrics) {
-        		printCollectiveObservedSum(memberPrefix + PAGES, metrics.getPageViewCount());
+        		//printCollectiveObservedSum(memberPrefix + PAGES, metrics.getPageViewCount());
         	}
     	}
 	}
@@ -282,9 +284,9 @@ public class ApacheLogMonitor extends AManagedMonitor {
     		Metrics metrics = member.getValue();
     		printCollectiveObservedSum(memberPrefix + HITS, metrics.getHitCount());
 			printCollectiveSumSum(memberPrefix + BANDWIDTH, metrics.getBandwidth());
-			printCollectiveSumSum(memberPrefix + TOTAL_PAGES_CALLS, metrics.getTotalHitCount());
-			printCollectiveSumSum(memberPrefix + TOTAL_200_HITS, metrics.getHit200Count());
-			printCollectiveSumSum(memberPrefix + TOTAL_NON_200_HITS, metrics.getHitNon200Count());
+			printCollectiveSumSum(memberPrefix + TOTAL_PAGES_CALLS2, metrics.getTotalHitCount());
+			printCollectiveSumSum(memberPrefix + TOTAL_200_HITS2, metrics.getHit200Count());
+			printCollectiveSumSum(memberPrefix + TOTAL_NON_200_HITS2, metrics.getHitNon200Count());
 			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO, metrics.getResponseTimeMicro());
 			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MICRO200, metrics.getResponseTimeMicro200());
 			printCollectiveAvgAvg(memberPrefix + AVG_RESPONSETIME_MILI, metrics.getResponseTimeMili());
@@ -292,7 +294,7 @@ public class ApacheLogMonitor extends AManagedMonitor {
 
 
         	if (includePageMetrics) {
-        		printCollectiveObservedSum(memberPrefix + PAGES, metrics.getPageViewCount());
+        		//printCollectiveObservedSum(memberPrefix + PAGES, metrics.getPageViewCount());
         	}
     	}
     }
@@ -359,6 +361,23 @@ public class ApacheLogMonitor extends AManagedMonitor {
 			}
 		}
 		
+		return metricPrefix;
+	}
+
+	private String getPagePrefix(Configuration config) {
+		String metricPrefix = config.getMetricPrefix();
+		
+		if (StringUtils.isBlank(metricPrefix)) {
+			metricPrefix = DEFAULT_METRIC_PATH;
+			
+		} else {
+			metricPrefix = metricPrefix.trim();
+			
+			if (!metricPrefix.endsWith(METRIC_PATH_SEPARATOR)) {
+				metricPrefix = metricPrefix + METRIC_PATH_SEPARATOR;
+			}
+		}
+		metricPrefix.replace("Apache Log Monitor", "Apache Log Monitor - Pages");
 		return metricPrefix;
 	}
 
