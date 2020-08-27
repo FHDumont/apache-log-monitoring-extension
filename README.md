@@ -180,7 +180,7 @@ Extension grok Example
 DATETIME_ESPECIFIC %{YEAR}[./-]%{MONTHNUM}[./-]%{MONTHDAY}[./-]%{HOUR}[./-]%{MINUTE}[./-]%{SECOND}[./-]%{MILISECOND}
 
 CUSTOMAPACHELOG %{IPORHOST:clientip},%{DATETIME_ESPECIFIC:timestamp},%{NUMBER:portnumber},(?:HTTP/%{NUMBER:httpversion})?,(?:%{WORD:verb}),(?:%{NUMBER:logid}|-),%{DATA:request},(?:%{DATA:querystring})?,%{NUMBER:response},\(Res.Status\),(?:%{NUMBER:bytes}|-),\(Bytes Trans\),(?:%{NUMBER:microseg}|-),\(micro-seg\),(?:%{NUMBER:seg}|-),\(seg\),(?:%{HOSTPORT:hostport}|-),(?<trash>.*)
-
+~~~
 
 ~~~
 
